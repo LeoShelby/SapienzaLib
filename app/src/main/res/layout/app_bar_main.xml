@@ -16,7 +16,8 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        app:popupTheme="@style/AppTheme.PopupOverlay" />
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:titleTextColor="#536dfe"/>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -27,8 +28,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="@color/colorAccent"
-        app:itemIconTint="#F6F6F6"
-        app:itemTextColor="#F6F6F6"
+        app:itemIconTint="#536dfe"
+        app:itemTextColor="#536dfe"
         app:menu="@menu/navigation" />
 
 </android.support.design.widget.CoordinatorLayout>
