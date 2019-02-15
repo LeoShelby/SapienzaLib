@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
+        mGoogleSignInClient.signOut();
         findViewById(R.id.login_button).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,6 +72,7 @@ public class LoginActivity extends AppCompatActivity {
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+
         if(account != null)
             updateUI(account);
     }
