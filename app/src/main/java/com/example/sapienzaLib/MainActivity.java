@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity
         Intent intent = getIntent();
         intent.getStringExtra("user_name");
         intent.getStringExtra("user_email");
-        
+
 
     }
 
