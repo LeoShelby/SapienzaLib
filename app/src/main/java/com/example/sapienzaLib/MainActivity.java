@@ -77,8 +77,10 @@ public class MainActivity extends AppCompatActivity
         String pic = intent.getStringExtra("user_pic");
         //intent.getStringExtra("user_email");
 
+        String mat = email.split("\\.")[1].split("@")[0];
+
         ((TextView) findViewById(R.id.drawer_name)).setText(name);
-        ((TextView) findViewById(R.id.drawer_email)).setText(email);
+        ((TextView) findViewById(R.id.drawer_email)).setText(mat);
         Picasso.with(getBaseContext()).load(pic).fit().into((ImageView)findViewById(R.id.drawer_image));
 
         return true;
