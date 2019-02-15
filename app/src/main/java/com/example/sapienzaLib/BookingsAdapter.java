@@ -1,4 +1,4 @@
-package com.example.sapienzalib;
+package com.example.sapienzaLib;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;

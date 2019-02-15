@@ -1,6 +1,4 @@
-package com.example.sapienzalib;
-
-import java.util.Date;
+package com.example.sapienzaLib;
 
 public class Booking {
     private String title;

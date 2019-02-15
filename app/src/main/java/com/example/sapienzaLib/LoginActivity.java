@@ -1,42 +1,18 @@
-package com.example.sapienzalib;
+package com.example.sapienzaLib;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.app.LoaderManager.LoaderCallbacks;
 
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.AsyncTask;
-
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import org.apache.http.HttpResponse;
@@ -52,8 +28,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.Manifest.permission.READ_CONTACTS;
-
 /**
  * A login screen that offers login via email/password.
  */
@@ -62,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private int RC_SIGN_IN = 1;
     private String TAG = "Gugol Sign in";
+    private User loggedUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,8 +106,14 @@ public class LoginActivity extends AppCompatActivity {
         //Method to go to directly to the home activity
         //But first, I have to auth my user to my backend.
         if(account != null){
-            authUserBackend(account.getIdToken());
+            //authUserBackend(account.getIdToken());
             //Open home activity
+            loggedUser = new User(account.getDisplayName(), account.getEmail(), account.getPhotoUrl());
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("user_name", loggedUser.getName());
+            intent.putExtra("user_email", loggedUser.getEmail());
+            intent.putExtra("user_pic", loggedUser.getPicUrl());
+            startActivity(intent);
         }
         //If not connected, please do nothing.
 
