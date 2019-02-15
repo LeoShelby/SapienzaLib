@@ -21,4 +21,12 @@
     </string>
     <string name="client_id_token">905591433407-2qlpp0afk6rdc3dtadqi23ckfu3vvjc0.apps.googleusercontent.com</string>
     <string name="title_activity_book">BookActivity</string>
+
+
+    <string name="expiring">Expiring</string>
+    <string name="your">Your</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
