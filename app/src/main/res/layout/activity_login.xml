@@ -30,7 +30,7 @@
                 android:id="@+id/imageView2"
                 android:layout_width="match_parent"
                 android:layout_height="163dp"
-                tools:srcCompat="@drawable/logo_sapienza" />
+                android:src="@drawable/logo_sap" />
 
             <TextView
                 android:id="@+id/login_title"
