@@ -1,6 +1,7 @@
 package com.example.sapienzaLib;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -12,10 +13,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.squareup.picasso.Picasso;
+
+import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -47,12 +53,6 @@ public class MainActivity extends AppCompatActivity
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        //Setup infos
-        Intent intent = getIntent();
-        intent.getStringExtra("user_name");
-        intent.getStringExtra("user_email");
-
-
     }
 
     @Override
@@ -69,6 +69,18 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+
+        //Setup infos
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("user_name");
+        String email = intent.getStringExtra("user_email");
+        String pic = intent.getStringExtra("user_pic");
+        //intent.getStringExtra("user_email");
+
+        ((TextView) findViewById(R.id.drawer_name)).setText(name);
+        ((TextView) findViewById(R.id.drawer_email)).setText(email);
+        Picasso.with(getBaseContext()).load(pic).fit().into((ImageView)findViewById(R.id.drawer_image));
+
         return true;
     }
 

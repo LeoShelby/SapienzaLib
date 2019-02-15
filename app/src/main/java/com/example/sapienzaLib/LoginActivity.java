@@ -113,7 +113,7 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("user_name", loggedUser.getName());
             intent.putExtra("user_email", loggedUser.getEmail());
-            intent.putExtra("user_pic", loggedUser.getPicUrl());
+            intent.putExtra("user_pic", loggedUser.getPicUrl().toString());
             startActivity(intent);
         }
         //If not connected, please do nothing.
