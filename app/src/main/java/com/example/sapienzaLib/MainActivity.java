@@ -1,5 +1,6 @@
 package com.example.sapienzaLib;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -45,6 +46,12 @@ public class MainActivity extends AppCompatActivity
         // Give the TabLayout the ViewPager
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        //Setup infos
+        Intent intent = getIntent();
+        intent.getStringExtra("user_name");
+        intent.getStringExtra("user_email");
+        
 
     }
 
@@ -107,6 +114,9 @@ public class MainActivity extends AppCompatActivity
             // Build a GoogleSignInClient with the options specified by gso.
             GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
             mGoogleSignInClient.signOut();
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
 
         }
 
