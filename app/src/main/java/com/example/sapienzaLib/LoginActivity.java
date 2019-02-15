@@ -138,5 +138,11 @@ public class LoginActivity extends AppCompatActivity {
             Log.e(TAG, "Error sending ID token to backend.", e);
         }
     }
+
+    public void onClick(View view){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
 }
 
