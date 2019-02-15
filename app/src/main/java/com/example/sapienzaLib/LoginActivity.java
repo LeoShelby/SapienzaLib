@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -37,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private int RC_SIGN_IN = 1;
     private String TAG = "Gugol Sign in";
+    private User loggedUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +98,6 @@ public class LoginActivity extends AppCompatActivity {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
-            ((TextView)findViewById(R.id.login_title)).setText(e.getStatusCode()+"");
             updateUI(null);
         }
     }
@@ -107,9 +106,14 @@ public class LoginActivity extends AppCompatActivity {
         //Method to go to directly to the home activity
         //But first, I have to auth my user to my backend.
         if(account != null){
-            ((TextView)findViewById(R.id.login_title)).setText(account.getEmail());
-            authUserBackend(account.getIdToken());
+            //authUserBackend(account.getIdToken());
             //Open home activity
+            loggedUser = new User(account.getDisplayName(), account.getEmail(), account.getPhotoUrl());
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("user_name", loggedUser.getName());
+            intent.putExtra("user_email", loggedUser.getEmail());
+            intent.putExtra("user_pic", loggedUser.getPicUrl());
+            startActivity(intent);
         }
         //If not connected, please do nothing.
 
@@ -133,11 +137,6 @@ public class LoginActivity extends AppCompatActivity {
         } catch (IOException e) {
             Log.e(TAG, "Error sending ID token to backend.", e);
         }
-    }
-
-    public void onClick(View view){
-        Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
     }
 }
 
