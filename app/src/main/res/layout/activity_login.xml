@@ -58,8 +58,18 @@
                 android:background="@drawable/login_b_shape"
                 android:text="@string/action_sign_in"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
 
         </LinearLayout>
     </ScrollView>
+
+    <Button
+        android:id="@+id/to_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:background="@color/colorAccent"
+        android:elevation="0dp"
+        android:text="Proceed without login"
+        android:onClick="onClick"/>
 </LinearLayout>

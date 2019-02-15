@@ -1,4 +1,4 @@
-package com.example.sapienzalib;
+package com.example.sapienzaLib;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class BookingListAdapter extends ArrayAdapter<Booking> {
 
@@ -33,13 +32,13 @@ public class BookingListAdapter extends ArrayAdapter<Booking> {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource, parent, false);
 
-        TextView tvTitle = (TextView) convertView.findViewById(R.id.textView1);
-        TextView tvAuthor = (TextView) convertView.findViewById(R.id.textView2);
-        //TextView tvDate = (TextView) convertView.findViewById(R.id.textView3);
+        TextView tvTitle = (TextView) convertView.findViewById(R.id.textView2);
+        TextView tvAuthor = (TextView) convertView.findViewById(R.id.textView3);
+        TextView tvDate = (TextView) convertView.findViewById(R.id.textView1);
 
         tvTitle.setText(title);
         tvAuthor.setText(author);
-        //tvDate.setText((CharSequence) date);
+        tvDate.setText((CharSequence) "Expiring Date");
 
         return convertView;
 

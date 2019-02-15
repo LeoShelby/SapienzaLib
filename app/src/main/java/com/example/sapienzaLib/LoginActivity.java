@@ -1,34 +1,12 @@
-package com.example.sapienzalib;
+package com.example.sapienzaLib;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.app.LoaderManager.LoaderCallbacks;
 
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.AsyncTask;
-
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -36,7 +14,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import org.apache.http.HttpResponse;
@@ -51,8 +28,6 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password.
@@ -123,6 +98,7 @@ public class LoginActivity extends AppCompatActivity {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
+            ((TextView)findViewById(R.id.login_title)).setText(e.getStatusCode()+"");
             updateUI(null);
         }
     }
@@ -131,6 +107,7 @@ public class LoginActivity extends AppCompatActivity {
         //Method to go to directly to the home activity
         //But first, I have to auth my user to my backend.
         if(account != null){
+            ((TextView)findViewById(R.id.login_title)).setText(account.getEmail());
             authUserBackend(account.getIdToken());
             //Open home activity
         }
@@ -156,6 +133,11 @@ public class LoginActivity extends AppCompatActivity {
         } catch (IOException e) {
             Log.e(TAG, "Error sending ID token to backend.", e);
         }
+    }
+
+    public void onClick(View view){
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
     }
 }
 

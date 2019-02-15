@@ -11,7 +11,7 @@
 
     <fragment
         android:id="@+id/fragment"
-        android:name="com.example.sapienzalib.HomeFragment"
+        android:name="com.example.sapienzaLib.HomeFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:layout="@layout/home_fragment"

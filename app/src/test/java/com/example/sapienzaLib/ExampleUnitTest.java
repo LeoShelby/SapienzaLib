@@ -1,4 +1,4 @@
-package com.example.sapienzalib;
+package com.example.sapienzaLib;
 
 import org.junit.Test;
 

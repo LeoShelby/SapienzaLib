@@ -1,4 +1,4 @@
-package com.example.sapienzalib;
+package com.example.sapienzaLib;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,11 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-public class ExpBookingsFragment extends Fragment {
+public class YourBookingsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.exp_bookings_fragment, container, false);
+        return inflater.inflate(R.layout.your_bookings_fragment, container, false);
     }
+
 }

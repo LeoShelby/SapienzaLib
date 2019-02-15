@@ -1,4 +1,4 @@
-package com.example.sapienzalib;
+package com.example.sapienzaLib;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
