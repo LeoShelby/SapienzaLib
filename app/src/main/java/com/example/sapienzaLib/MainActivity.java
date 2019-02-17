@@ -21,6 +21,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.squareup.picasso.Picasso;
 
+import org.apache.commons.lang3.text.WordUtils;
+
 import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity
@@ -77,6 +79,7 @@ public class MainActivity extends AppCompatActivity
         String pic = intent.getStringExtra("user_pic");
         //intent.getStringExtra("user_email");
 
+        name = WordUtils.capitalize(name);
         String mat = email.split("\\.")[1].split("@")[0];
 
         ((TextView) findViewById(R.id.drawer_name)).setText(name);
@@ -108,6 +111,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_your_booking) {
+
+            Intent intent = new Intent(this, BookActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_wish_list) {
 

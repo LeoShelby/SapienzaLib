@@ -57,8 +57,9 @@
                 android:layout_marginTop="16dp"
                 android:background="@drawable/login_b_shape"
                 android:text="@string/action_sign_in"
+                android:textColor="@android:color/white"
                 android:textSize="18sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
         </LinearLayout>
     </ScrollView>
