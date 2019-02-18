@@ -9,9 +9,8 @@ public class BookingsAdapter extends FragmentPagerAdapter {
 
     private Context mContext;
 
-    public BookingsAdapter(Context context, FragmentManager fm) {
+    public BookingsAdapter(FragmentManager fm) {
         super(fm);
-        mContext = context;
     }
 
     // This determines the fragment for each tab

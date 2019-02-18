@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".SearchFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <ListView
+        android:id="@+id/list_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="65dp"
+        android:listSelector="@android:color/transparent" >
+    </ListView>
+
+    <com.arlib.floatingsearchview.FloatingSearchView
+        android:id="@+id/floating_search_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:floatingSearch_close_search_on_keyboard_dismiss="true"
+        app:floatingSearch_searchBarMarginLeft="5dp"
+        app:floatingSearch_searchBarMarginRight="5dp"
+        app:floatingSearch_searchBarMarginTop="5dp"
+        app:floatingSearch_searchHint="Search a book"
+        app:floatingSearch_showSearchKey="true"
+        app:floatingSearch_suggestionsListAnimDuration="250" />
+</FrameLayout>

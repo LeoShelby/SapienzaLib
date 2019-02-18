@@ -1,20 +1,39 @@
 package com.example.sapienzaLib;
 
+
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class PopBookingsFragment extends ListFragment {
+
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class SearchFragment extends Fragment {
+
+
+    public SearchFragment() {
+        // Required empty public constructor
+    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        View lw = inflater.inflate(R.layout.pop_bookings_fragment, container, false);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        View rootView = inflater.inflate(R.layout.fragment_search, container, false);
 
         //Create the Person objects
         Booking book1 = new Booking("title1","author1");
@@ -45,17 +64,14 @@ public class PopBookingsFragment extends ListFragment {
         bookingList.add(book11);
 
         BookingListAdapter adapter = new BookingListAdapter(getActivity().getBaseContext(), R.layout.booking_view_layout, bookingList);
-        setListAdapter(adapter);
+        ListView lw = (ListView) rootView.findViewById(R.id.list_search);
+        lw.setAdapter(adapter);
 
+        lw.setDividerHeight(0);
+        lw.setDivider(null);
 
         // Inflate the layout for this fragment
-        ListView mListView = lw.findViewById(android.R.id.list);
-        mListView.setDividerHeight(0);
-        mListView.setDivider(null);
-
-
-        return lw;
+        return rootView;
     }
-
 
 }

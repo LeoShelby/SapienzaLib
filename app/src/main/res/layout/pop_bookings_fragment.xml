@@ -8,8 +8,10 @@
     android:orientation="horizontal">
 
     <ListView
-        android:id="@+id/pop_list_view"
+        android:id="@android:id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:listSelector="@android:color/transparent"
+        />
 
 </LinearLayout>
