@@ -44,6 +44,7 @@ public class PopBookingsFragment extends ListFragment {
 
 
         // Inflate the layout for this fragment
+        //TODO qua proprio me sa che ho fatto na cazzata
         ListView mListView = lw.findViewById(android.R.id.list);
         mListView.setDividerHeight(0);
         mListView.setDivider(null);
