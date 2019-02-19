@@ -67,6 +67,10 @@ public class MainActivity extends AppCompatActivity
                         switchToFragmentHome();
                         return true;
                     }
+                    case R.id.navigation_calendar: {
+                        switchToFragmentCalendar();
+                        return true;
+                    }
                 }
 
                 return false;
@@ -177,4 +181,13 @@ public class MainActivity extends AppCompatActivity
         t.replace(R.id.fragment, f);
         t.commit();
     }
+
+    public void switchToFragmentCalendar(){
+        Fragment f = new CalendarFragment();
+        FragmentTransaction t = getSupportFragmentManager().beginTransaction();
+        t.replace(R.id.fragment,f);
+        t.commit();
+    }
+
+
 }
