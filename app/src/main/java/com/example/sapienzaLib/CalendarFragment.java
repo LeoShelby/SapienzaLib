@@ -32,14 +32,21 @@ public class CalendarFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_calendar, container, false);
+
+        listViewBooking = (ListView) rootView.findViewById(R.id.calendar_list);
+        listViewBooking.setDividerHeight(0);
+        listViewBooking.setDivider(null);
+
         calendarView = (CalendarView) rootView.findViewById(R.id.calendarView);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView calendarView, int i, int i1, int i2) {
                 //dateDisplay.setText("Date: " + i2 + " / " + i1 + " / " + i);
-                final View v = inflater.inflate(R.layout.calendar_item_layout, container, false);
-                listViewBooking = (ListView) v.findViewById(R.id.listView1);
-                bookings.add(new Booking("aa","bb",new Date(2019,3,20)));
+
+                bookings.clear();
+                bookings.add(new Booking("Harry Potter","J.K. Rowling",new Date(2019,3,20)));
+                bookings.add(new Booking("AC Origins","Paolo Joiki",new Date(2019,3,20)));
+                bookings.add(new Booking("Non so fa un cazzo","Alessio Fiorenza",new Date(2019,3,20)));
 
                 adapter = new CalendarListAdapter(getActivity(),bookings);
                 listViewBooking.setAdapter(adapter);

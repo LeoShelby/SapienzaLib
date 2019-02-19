@@ -47,8 +47,8 @@ public class CalendarListAdapter extends BaseAdapter {
         TextView textViewTitle = (TextView) itemView.findViewById(R.id.textView2);
         TextView textViewAuthor = (TextView) itemView.findViewById(R.id.textView3);
         TextView textViewDate = (TextView) itemView.findViewById(R.id.textView1);
-        textViewAuthor.setText("aa");
-        textViewTitle.setText("bb");
+        textViewAuthor.setText(bookings.get(position).getTitle());
+        textViewTitle.setText(bookings.get(position).getAuthor());
         textViewDate.setText("20/02/2019");
         return itemView;
     }
