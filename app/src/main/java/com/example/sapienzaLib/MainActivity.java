@@ -131,6 +131,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_wish_list) {
 
         } else if (id == R.id.nav_add_book) {
+            Intent intent = new Intent(this, AddBookActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_manage) {
 
