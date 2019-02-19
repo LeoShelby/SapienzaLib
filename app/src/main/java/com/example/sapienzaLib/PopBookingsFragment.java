@@ -5,6 +5,8 @@ import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
 import java.util.ArrayList;
 
 public class PopBookingsFragment extends ListFragment {
@@ -12,8 +14,7 @@ public class PopBookingsFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-
-        //ListView mListView = (ListView) View.findViewById(R.id.pop_list_view);
+        View lw = inflater.inflate(R.layout.pop_bookings_fragment, container, false);
 
         //Create the Person objects
         Booking book1 = new Booking("title1","author1");
@@ -45,11 +46,15 @@ public class PopBookingsFragment extends ListFragment {
 
         BookingListAdapter adapter = new BookingListAdapter(getActivity().getBaseContext(), R.layout.booking_view_layout, bookingList);
         setListAdapter(adapter);
+
+
         // Inflate the layout for this fragment
+        ListView mListView = lw.findViewById(android.R.id.list);
+        mListView.setDividerHeight(0);
+        mListView.setDivider(null);
 
-        //return inflater.inflate(R.layout.pop_bookings_fragment, container, false);
 
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return lw;
     }
 
 

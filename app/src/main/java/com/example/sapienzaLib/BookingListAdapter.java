@@ -32,13 +32,13 @@ public class BookingListAdapter extends ArrayAdapter<Booking> {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource, parent, false);
 
-        TextView tvTitle = (TextView) convertView.findViewById(R.id.textView2);
-        TextView tvAuthor = (TextView) convertView.findViewById(R.id.textView3);
-        TextView tvDate = (TextView) convertView.findViewById(R.id.textView1);
+        TextView tvTitle = convertView.findViewById(R.id.textView2);
+        TextView tvAuthor = convertView.findViewById(R.id.textView3);
+        TextView tvDate = convertView.findViewById(R.id.textView1);
 
         tvTitle.setText(title);
         tvAuthor.setText(author);
-        tvDate.setText((CharSequence) "Expiring Date");
+        tvDate.setText("Expiring Date");
 
         return convertView;
 
