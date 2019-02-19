@@ -45,12 +45,12 @@ public class SearchFragment extends Fragment {
 
         final ArrayList<Book> mBooks = new ArrayList<Book>();
 
-        mBooks.add(new Book("Moby tumadre", "Anjelocat", "Sceinadeimerda", "http://www.rapburger.com/wp-content/uploads/2017/10/22310425_1682374125147785_5102209946843909253_n.jpg"));
+        mBooks.add(new Book("Regardex Moi", "Frah Quintale", "Album di FQ", "http://www.rapburger.com/wp-content/uploads/2017/10/22310425_1682374125147785_5102209946843909253_n.jpg"));
         mBooks.add(new Book("Moby tumadre", "Anjelocat", "Sceinadeimerda", "/Users/salvatorecolitta/AndroidStudioProjects/SapienzaLib/app/src/main/res/drawable/logo_sap"));
         mBooks.add(new Book("Moby tumadre", "Anjelocat", "Sceinadeimerda", "/Users/salvatorecolitta/AndroidStudioProjects/SapienzaLib/app/src/main/res/drawable/logo_sap"));
         mBooks.add(new Book("Moby tumadre", "Anjelocat", "Sceinadeimerda", "/Users/salvatorecolitta/AndroidStudioProjects/SapienzaLib/app/src/main/res/drawable/logo_sap"));
 
-        mAdapter = new BookListAdapter(mBooks);
+        mAdapter = new BookListAdapter(mBooks, getActivity());
         lw.setAdapter(mAdapter);
         lw.setLayoutManager(new LinearLayoutManager(getContext()));
         ((BookListAdapter)mAdapter).setOnItemClickListener(new BookListAdapter.OnItemClickListener() {

@@ -1,5 +1,6 @@
 package com.example.sapienzaLib;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -11,12 +12,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.ViewHolder> {
 
     // Store a member variable for the contacts
     private List<Book> mBooks;
+    private Activity activity;
 
     // Define listener member variable
     private OnItemClickListener listener;
@@ -30,8 +34,9 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.ViewHo
     }
 
     // Pass in the contact array into the constructor
-    public BookListAdapter(List<Book> books) {
+    public BookListAdapter(List<Book> books, Activity activity) {
         mBooks = books;
+        this.activity = activity;
     }
 
     @NonNull
@@ -55,7 +60,7 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.ViewHo
         myViewHolder.titleTextView.setText(book.getTitle());
         myViewHolder.authorTextView.setText(book.getAuthor());
         myViewHolder.descriptionTextView.setText(book.getDescription());
-        myViewHolder.thumbnailImageView.setImageURI(Uri.parse(book.getThumbnail()));
+        Picasso.with(activity).load(book.getThumbnail()).fit().into(myViewHolder.thumbnailImageView);
 
     }
 
