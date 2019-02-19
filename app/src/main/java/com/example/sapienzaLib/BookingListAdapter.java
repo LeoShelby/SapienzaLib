@@ -1,33 +1,40 @@
 package com.example.sapienzaLib;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class BookingListAdapter extends ArrayAdapter<Booking> {
 
     private Context mContext;
     int mResource;
+    private String type_booking;
 
     //public BookingListAdapter(MainActivity mainActivity, int booking_view_layout, ArrayList<Booking> peopleList) {
-    public BookingListAdapter(Context context, int resource, ArrayList<Booking> objects) {
+    public BookingListAdapter(Context context, int resource, ArrayList<Booking> objects, String type_booking) {
         super(context,resource,objects);
         mContext = context;
         mResource = resource;
+        this.type_booking = type_booking;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         String title = getItem(position).getTitle();
         String author = getItem(position).getAuthor();
-        //Date date = getItem(position).getDate();
+        Date date = getItem(position).getDate();
 
-        Booking booking = new Booking(title,author);
+        //Booking booking = new Booking(title,author,date);
 
         LayoutInflater inflater = LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource, parent, false);
@@ -38,7 +45,21 @@ public class BookingListAdapter extends ArrayAdapter<Booking> {
 
         tvTitle.setText(title);
         tvAuthor.setText(author);
-        tvDate.setText("Expiring Date");
+
+
+        String s = new SimpleDateFormat("MM-dd-YYYY").format(date);
+
+        if(this.type_booking.equals("Fresh")){
+            tvDate.setText("Expiring on: "+s);
+            tvDate.setTextColor(Color.parseColor( "#009900"));
+        }
+
+        if(this.type_booking.equals("Exp")){
+            tvDate.setText("Expiring on: "+s);
+            tvDate.setTextColor(Color.RED);
+        }
+
+        if(this.type_booking.equals("Pop")) tvDate.setText("Available on: " + s);
 
         return convertView;
 
