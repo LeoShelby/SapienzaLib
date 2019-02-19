@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,17 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.ViewHo
 
     // Store a member variable for the contacts
     private List<Book> mBooks;
+
+    // Define listener member variable
+    private OnItemClickListener listener;
+    // Define the listener interface
+    public interface OnItemClickListener {
+        void onItemClick(View itemView, int position);
+    }
+    // Define the method that allows the parent activity or fragment to define the listener
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
 
     // Pass in the contact array into the constructor
     public BookListAdapter(List<Book> books) {
@@ -72,6 +84,21 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.ViewHo
             descriptionTextView = (TextView) itemView.findViewById(R.id.book_list_description);
             thumbnailImageView = (ImageView) itemView.findViewById(R.id.book_list_image);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(v, position);
+                        }
+                    }
+                }
+            });
         }
+
+        // Handles the row being being clicked
+
+
     }
 }

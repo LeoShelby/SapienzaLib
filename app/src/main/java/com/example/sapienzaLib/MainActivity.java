@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.navigation_search: {
-                        Log.d("Diocan", "Premuto");
                         switchToFragmentSearch();
                         return true;
                     }
@@ -128,9 +127,6 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_your_booking) {
-
-            Intent intent = new Intent(this, BookActivity.class);
-            startActivity(intent);
 
         } else if (id == R.id.nav_wish_list) {
 
