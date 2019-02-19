@@ -8,13 +8,13 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/list_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="65dp"
         android:listSelector="@android:color/transparent" >
-    </ListView>
+    </android.support.v7.widget.RecyclerView>
 
     <com.arlib.floatingsearchview.FloatingSearchView
         android:id="@+id/floating_search_view"
