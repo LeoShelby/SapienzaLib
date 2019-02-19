@@ -1,14 +1,16 @@
 package com.example.sapienzaLib;
 
+import java.util.Date;
+
 public class Booking {
     private String title;
     private String author;
-    //private Date date;
+    private Date date;
 
-    public Booking(String title, String author) {
+    public Booking(String title, String author, Date date) {
         this.title = title;
         this.author = author;
-        //this.date = date;
+        this.date = date;
     }
 
     public String getTitle() {
@@ -18,6 +20,8 @@ public class Booking {
     public String getAuthor() {
         return author;
     }
+
+    public Date getDate(){return  date;}
 
 
 
@@ -29,6 +33,9 @@ public class Booking {
         this.author = author;
     }
 
+    public void setDate(Date date){
+        this.date = date;
+    }
 
 }
 

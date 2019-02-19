@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class PopBookingsFragment extends ListFragment {
 
@@ -17,17 +18,14 @@ public class PopBookingsFragment extends ListFragment {
         View lw = inflater.inflate(R.layout.pop_bookings_fragment, container, false);
 
         //Create the Person objects
-        Booking book1 = new Booking("title1","author1");
-        Booking book2 = new Booking("title2","author1");
-        Booking book3 = new Booking("title3","author1");
-        Booking book4 = new Booking("title4","author1");
-        Booking book5 = new Booking("title5","author1");
-        Booking book6 = new Booking("title5","author1");
-        Booking book7 = new Booking("title5","author1");
-        Booking book8 = new Booking("title5","author1");
-        Booking book9 = new Booking("title5","author1");
-        Booking book10 = new Booking("title5","author1");
-        Booking book11= new Booking("title5","author1");
+        Booking book1 = new Booking("Harry Potter","J.K.Rowling", new Date("03/03/2019"));
+        Booking book2 = new Booking("SuperLongMegaGigaTestBreaKTitle","author2", new Date("05/06/2019"));
+        Booking book3 = new Booking("Title3","Author3", new Date("22/07/2019"));
+        Booking book4 = new Booking("Title4","Author1", new Date("12/03/2019"));
+        Booking book5 = new Booking("Title5","Author4", new Date("20/04/2019"));
+        Booking book6 = new Booking("Title6","Author3", new Date("05/10/2019"));
+        Booking book7 = new Booking("Title7","Author1", new Date("14/12/2019"));
+
 
 
         //Add the Person objects to an ArrayList
@@ -39,12 +37,9 @@ public class PopBookingsFragment extends ListFragment {
         bookingList.add(book5);
         bookingList.add(book6);
         bookingList.add(book7);
-        bookingList.add(book8);
-        bookingList.add(book9);
-        bookingList.add(book10);
-        bookingList.add(book11);
 
-        BookingListAdapter adapter = new BookingListAdapter(getActivity().getBaseContext(), R.layout.booking_view_layout, bookingList);
+
+        BookingListAdapter adapter = new BookingListAdapter(getActivity().getBaseContext(), R.layout.booking_view_layout, bookingList, "Pop");
         setListAdapter(adapter);
 
 
