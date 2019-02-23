@@ -71,13 +71,17 @@ public class MainActivity extends AppCompatActivity
                         switchToFragmentCalendar();
                         return true;
                     }
+                    case R.id.navigation_true_home: {
+                        switchToFragmentTrueHome();
+                        return true;
+                    }
                 }
 
                 return false;
             }
         });
 
-        switchToFragmentHome();
+        switchToFragmentTrueHome();
 
     }
 
@@ -184,6 +188,13 @@ public class MainActivity extends AppCompatActivity
 
     public void switchToFragmentCalendar(){
         Fragment f = new CalendarFragment();
+        FragmentTransaction t = getSupportFragmentManager().beginTransaction();
+        t.replace(R.id.fragment,f);
+        t.commit();
+    }
+
+    public void switchToFragmentTrueHome(){
+        Fragment f = new HomePageFragment();
         FragmentTransaction t = getSupportFragmentManager().beginTransaction();
         t.replace(R.id.fragment,f);
         t.commit();
