@@ -22,7 +22,7 @@ public class HomePageFragment extends Fragment {
 
         CircleImageView cim = rootView.findViewById(R.id.image_home);
         Picasso.with(getActivity()).load(getActivity().getIntent().getStringExtra("user_pic")).fit().into(cim);
-
+        //rootView.findViewById(R.id.card).setBackgroundResource(R.drawable.side_nav_bar);
         return rootView;
     }
 
