@@ -13,6 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.arlib.floatingsearchview.FloatingSearchView;
+import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,14 +48,12 @@ public class SearchFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_search, container, false);
+        FloatingSearchView floatingSearchView = rootView.findViewById(R.id.floating_search_view);
         lw = (RecyclerView) rootView.findViewById(R.id.list_search);
 
         final ArrayList<Book> mBooks = new ArrayList<Book>();
 
         mBooks.add(new Book("Regardex Moi", "Frah Quintale", "Album di FQ", "http://www.rapburger.com/wp-content/uploads/2017/10/22310425_1682374125147785_5102209946843909253_n.jpg"));
-        mBooks.add(new Book("Moby tumadre", "Anjelocat", "Sceinadeimerda", "/Users/salvatorecolitta/AndroidStudioProjects/SapienzaLib/app/src/main/res/drawable/logo_sap"));
-        mBooks.add(new Book("Moby tumadre", "Anjelocat", "Sceinadeimerda", "/Users/salvatorecolitta/AndroidStudioProjects/SapienzaLib/app/src/main/res/drawable/logo_sap"));
-        mBooks.add(new Book("Moby tumadre", "Anjelocat", "Sceinadeimerda", "/Users/salvatorecolitta/AndroidStudioProjects/SapienzaLib/app/src/main/res/drawable/logo_sap"));
 
         mAdapter = new BookListAdapter(mBooks, getActivity());
         lw.setAdapter(mAdapter);
@@ -68,8 +73,42 @@ public class SearchFragment extends Fragment {
             }
         });
 
+        floatingSearchView.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
+            @Override
+            public void onSuggestionClicked(SearchSuggestion searchSuggestion) {
+
+            }
+
+            @Override
+            public void onSearchAction(String currentQuery) {
+                try {
+                    String response = BackendUtilities.getBookByQuery(currentQuery);
+                    JSONObject jObject = new JSONObject(response);
+                    JSONArray jArray = jObject.getJSONArray("items");
+                    for (int i=0; i < jArray.length(); i++)
+                    {
+                        try {
+                            JSONObject oneObject = jArray.getJSONObject(i);
+                            // Pulling items from the array
+                            String oneObjectsItem = oneObject.getString("title");
+                            mBooks.add(new Book(oneObjectsItem, "Frah Quintale", "Album di FQ", "http://www.rapburger.com/wp-content/uploads/2017/10/22310425_1682374125147785_5102209946843909253_n.jpg"));
+
+                        } catch (JSONException e) {
+                            // Oops
+                        }
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
         // Inflate the layout for this fragment
         return rootView;
     }
+
+
 
 }
