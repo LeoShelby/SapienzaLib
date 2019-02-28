@@ -53,7 +53,7 @@ public class SearchFragment extends Fragment {
 
         final ArrayList<Book> mBooks = new ArrayList<Book>();
 
-        mBooks.add(new Book("Regardex Moi", "Frah Quintale", "Album di FQ", "http://www.rapburger.com/wp-content/uploads/2017/10/22310425_1682374125147785_5102209946843909253_n.jpg"));
+        //mBooks.add(new Book("Regardex Moi", "Frah Quintale", "Album di FQ", "http://www.rapburger.com/wp-content/uploads/2017/10/22310425_1682374125147785_5102209946843909253_n.jpg"));
 
         mAdapter = new BookListAdapter(mBooks, getActivity());
         lw.setAdapter(mAdapter);
@@ -82,6 +82,10 @@ public class SearchFragment extends Fragment {
             @Override
             public void onSearchAction(String currentQuery) {
                 try {
+                    mBooks.clear();
+                    for(int i =0; i<mBooks.size(); i++){
+                        Log.d("kded","efer");
+                    }
                     String response = BackendUtilities.getBookByQuery(currentQuery);
                     JSONObject jObject = new JSONObject(response);
                     JSONArray jArray = jObject.getJSONArray("items");
@@ -90,8 +94,11 @@ public class SearchFragment extends Fragment {
                         try {
                             JSONObject oneObject = jArray.getJSONObject(i);
                             // Pulling items from the array
-                            String oneObjectsItem = oneObject.getString("title");
-                            mBooks.add(new Book(oneObjectsItem, "Frah Quintale", "Album di FQ", "http://www.rapburger.com/wp-content/uploads/2017/10/22310425_1682374125147785_5102209946843909253_n.jpg"));
+                            String title = oneObject.getString("title");
+                            String desc = oneObject.getString("description");
+                            String thumb = oneObject.getString("thumbnail");
+
+                            mBooks.add(new Book(title, "Frah Quintale", desc, thumb));
 
                         } catch (JSONException e) {
                             // Oops

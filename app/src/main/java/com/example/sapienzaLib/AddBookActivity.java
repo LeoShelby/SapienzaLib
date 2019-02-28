@@ -71,7 +71,11 @@ public class AddBookActivity extends AppCompatActivity implements OnScanListener
     @Override
     public void didScan(ScanSession scanSession) {
         List<Barcode> bc = scanSession.getNewlyRecognizedCodes();
-        Log.d("diocn",bc.get(0).getData());
+        try {
+            BackendUtilities.postBookByISBN(bc.get(0).getData());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         scanSession.stopScanning();
         Snackbar.make(layout, "Hai aggiunto stocazzo de libro", Snackbar.LENGTH_INDEFINITE)
                 .setAction("Click to close", new View.OnClickListener() {
