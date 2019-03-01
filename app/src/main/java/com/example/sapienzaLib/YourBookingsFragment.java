@@ -21,15 +21,15 @@ public class YourBookingsFragment extends ListFragment {
 
         View lw = inflater.inflate(R.layout.pop_bookings_fragment, container, false);
 
-        Booking book1 = new Booking("Title_fresh_1","Author1", new Date("03/03/2019"));
-        Booking book2 = new Booking("Title_fresh_2","Author1", new Date("05/06/2019"));
-        Booking book3 = new Booking("Title_fresh_3","Author2", new Date("05/09/2019"));
+        //Create the Person objects
+        Booking book1 = new Booking("Harry Potter","J.K.Rowling", "descrizione matta", "immagine matta", new Date("03/03/2019"),0);
+        Booking book2 = new Booking("SuperLongMegaGigaTestBreaKTitle","author2", "descrizione matta", "immagine matta", new Date("05/06/2019"),0);
+
 
         //Add the Person objects to an ArrayList
         ArrayList<Booking> bookingList = new ArrayList<>();
         bookingList.add(book1);
         bookingList.add(book2);
-        bookingList.add(book3);
 
         BookingListAdapter adapter = new BookingListAdapter(getActivity().getBaseContext(), R.layout.booking_view_layout, bookingList, "Fresh");
         setListAdapter(adapter);

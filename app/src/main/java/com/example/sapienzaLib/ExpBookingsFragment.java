@@ -22,8 +22,12 @@ public class ExpBookingsFragment extends ListFragment {
 
         View lw = inflater.inflate(R.layout.pop_bookings_fragment, container, false);
 
-        Booking book1 = new Booking("Title_exp_1","Author1", new Date("03/03/2019"));
-        Booking book2 = new Booking("Title_exp_2","Author2", new Date("05/06/2019"));
+
+        //Create the Person objects
+        Booking book1 = new Booking("Harry Potter","J.K.Rowling", "descrizione matta", "immagine matta", new Date("03/03/2019"),0);
+        Booking book2 = new Booking("SuperLongMegaGigaTestBreaKTitle","author2", "descrizione matta", "immagine matta", new Date("05/06/2019"),0);
+
+
 
         //Add the Person objects to an ArrayList
         ArrayList<Booking> bookingList = new ArrayList<>();
