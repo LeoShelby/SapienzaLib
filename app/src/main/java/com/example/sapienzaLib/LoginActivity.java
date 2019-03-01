@@ -1,6 +1,8 @@
 package com.example.sapienzaLib;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -107,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
         //Method to go to directly to the home activity
         //But first, I have to auth my user to my backend.
         if(account != null){
-            //authUserBackend(account.getIdToken());
+            authUserBackend(account.getIdToken());
             //Open home activity
             loggedUser = new User(account.getDisplayName(), account.getEmail(), account.getPhotoUrl());
             Intent intent = new Intent(this, MainActivity.class);
@@ -121,23 +123,16 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void authUserBackend(String idToken){
-        HttpClient httpClient = new DefaultHttpClient();
-        HttpPost httpPost = new HttpPost("https://yourbackend.example.com/tokensignin");
-
         try {
-            List nameValuePairs = new ArrayList(1);
-            nameValuePairs.add(new BasicNameValuePair("idToken", idToken));
-            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-            HttpResponse response = httpClient.execute(httpPost);
-            int statusCode = response.getStatusLine().getStatusCode();
-            final String responseBody = EntityUtils.toString(response.getEntity());
-            Log.i(TAG, "Signed in as: " + responseBody);
-        } catch (ClientProtocolException e) {
-            Log.e(TAG, "Error sending ID token to backend.", e);
-        } catch (IOException e) {
-            Log.e(TAG, "Error sending ID token to backend.", e);
+            String jwt = BackendUtilities.verifyUser(idToken);
+            SharedPreferences prefs = this.getSharedPreferences(
+                    "com.example.sapienzaLib", Context.MODE_PRIVATE);
+            prefs.edit().putString("JWT",jwt).apply();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+
+
     }
 
     public void onClick(View view){
