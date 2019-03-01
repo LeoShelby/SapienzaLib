@@ -54,6 +54,7 @@ public class HomeFragment extends Fragment {
                 return new ExpBookingsFragment();
             else
                 return new YourBookingsFragment();
+
         }
 
         @Override

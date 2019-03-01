@@ -34,6 +34,10 @@ public class BookingListAdapter extends ArrayAdapter<Booking> {
         String author = getItem(position).getAuthor();
         Date date = getItem(position).getDate();
 
+        int copies = getItem(position).getCopies();
+
+
+
         //Booking booking = new Booking(title,author,date);
 
         LayoutInflater inflater = LayoutInflater.from(mContext);
@@ -46,8 +50,8 @@ public class BookingListAdapter extends ArrayAdapter<Booking> {
         tvTitle.setText(title);
         tvAuthor.setText(author);
 
-
-        String s = new SimpleDateFormat("MM-dd-YYYY").format(date);
+        String s = "";
+        if(date!=null) s = new SimpleDateFormat("MM-dd-YYYY").format(date);
 
         if(this.type_booking.equals("Fresh")){
             tvDate.setText("Expiring on: "+s);
@@ -59,8 +63,16 @@ public class BookingListAdapter extends ArrayAdapter<Booking> {
             tvDate.setTextColor(Color.RED);
         }
 
-        if(this.type_booking.equals("Pop")) tvDate.setText("Available on: " + s);
-
+        if(this.type_booking.equals("Pop")){
+            if(copies > 0){
+                tvDate.setText("Available now");
+                tvDate.setTextColor(Color.parseColor( "#009900"));
+            }
+            else{
+                tvDate.setText("Available soon");
+                tvDate.setTextColor(Color.RED);
+            }
+        }
         return convertView;
 
     }

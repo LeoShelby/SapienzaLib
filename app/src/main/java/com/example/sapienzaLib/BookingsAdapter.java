@@ -15,7 +15,7 @@ public class BookingsAdapter extends FragmentPagerAdapter {
 
     // This determines the fragment for each tab
     @Override
-    public Fragment getItem(int position) {
+    public Fragment getItem(int position)  {
         if (position == 0)
             return new PopBookingsFragment();
         else if(position == 1)

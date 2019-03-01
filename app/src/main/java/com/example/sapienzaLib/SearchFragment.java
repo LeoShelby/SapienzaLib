@@ -83,9 +83,6 @@ public class SearchFragment extends Fragment {
             public void onSearchAction(String currentQuery) {
                 try {
                     mBooks.clear();
-                    for(int i =0; i<mBooks.size(); i++){
-                        Log.d("kded","efer");
-                    }
                     String response = BackendUtilities.getBookByQuery(currentQuery);
                     JSONObject jObject = new JSONObject(response);
                     JSONArray jArray = jObject.getJSONArray("items");

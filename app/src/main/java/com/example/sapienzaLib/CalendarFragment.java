@@ -44,9 +44,9 @@ public class CalendarFragment extends Fragment {
                 //dateDisplay.setText("Date: " + i2 + " / " + i1 + " / " + i);
 
                 bookings.clear();
-                bookings.add(new Booking("Harry Potter","J.K. Rowling",new Date(2019,3,20)));
-                bookings.add(new Booking("AC Origins","Paolo Joiki",new Date(2019,3,20)));
-                bookings.add(new Booking("Non so fa un cazzo","Alessio Fiorenza",new Date(2019,3,20)));
+                //Create the Person objects
+                Booking book1 = new Booking("Harry Potter","J.K.Rowling", "descrizione matta", "immagine matta", new Date("03/03/2019"),0);
+                Booking book2 = new Booking("SuperLongMegaGigaTestBreaKTitle","author2", "descrizione matta", "immagine matta", new Date("05/06/2019"),0);
 
                 adapter = new CalendarListAdapter(getActivity(),bookings);
                 listViewBooking.setAdapter(adapter);
