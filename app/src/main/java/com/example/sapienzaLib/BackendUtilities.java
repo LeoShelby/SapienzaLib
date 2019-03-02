@@ -46,6 +46,7 @@ public class BackendUtilities {
 
         Request request = new Request.Builder()
                 .url(url)
+                .addHeader("access-token", JWT)
                 .build();
 
         CountDownLatch countDownLatch = new CountDownLatch(1);
@@ -84,6 +85,7 @@ public class BackendUtilities {
 
         Request request = new Request.Builder()
                 .url(url)
+                .addHeader("access-token", JWT)
                 .post(requestBody)
                 .build();
 
@@ -153,6 +155,7 @@ public class BackendUtilities {
         HttpUrl.Builder urlBuilder = HttpUrl.parse("https://sapienzalib.herokuapp.com/booking").newBuilder();
         String url = urlBuilder.build().toString();
 
+        Log.d("TOKEND", JWT);
         Request request = new Request.Builder()
                 .url(url)
                 .addHeader("access-token", JWT)
@@ -185,6 +188,7 @@ public class BackendUtilities {
 
         Request request = new Request.Builder()
                 .url(url)
+                .addHeader("access-token", JWT)
                 .build();
 
         CountDownLatch countDownLatch = new CountDownLatch(1);
