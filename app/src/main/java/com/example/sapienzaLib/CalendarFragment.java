@@ -69,6 +69,7 @@ public class CalendarFragment extends Fragment {
         calendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override
             public void onDayClick(Date dateClicked) {
+                //calendarView.setCurrentDate(dateClicked);
                 List<Event> events = calendarView.getEvents(dateClicked);
                 Calendar c = Calendar.getInstance();
                 c.setTime(dateClicked);
