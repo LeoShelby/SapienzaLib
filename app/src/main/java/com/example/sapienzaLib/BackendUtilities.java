@@ -1,7 +1,12 @@
 package com.example.sapienzaLib;
 
+import android.content.Intent;
 import android.net.http.RequestQueue;
 import android.util.Log;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -16,6 +21,9 @@ import java.io.IOException;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
@@ -34,6 +42,7 @@ public class BackendUtilities {
 
     static String TAG = "GoogleVerify";
     static String JWT = "";
+    static GregorianCalendar EXPIREDATE;
     static OkHttpClient client = new OkHttpClient();
 
     public static String getBookByQuery(String q) throws InterruptedException {
@@ -135,6 +144,9 @@ public class BackendUtilities {
                 try (ResponseBody responseBody = response.body()) {
                     String jwt = responseBody.string();
                     JWT = jwt;
+                    GregorianCalendar gc = new GregorianCalendar();
+                    gc.add(Calendar.DATE, 1);
+                    EXPIREDATE = gc;
                     res[0] = jwt;
                     countDownLatch.countDown();
                     Log.d(TAG, "Signed in succesfully to backend");
@@ -214,4 +226,78 @@ public class BackendUtilities {
         return res[0];
 
     }
+
+    public static String getAllBookings() throws InterruptedException{
+        final String[] res = {""};
+        Response response = null;
+
+        HttpUrl.Builder urlBuilder = HttpUrl.parse("https://sapienzalib.herokuapp.com/booking/all").newBuilder();
+
+        String url = urlBuilder.build().toString();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("access-token", JWT)
+                .build();
+
+        CountDownLatch countDownLatch = new CountDownLatch(1);
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                res[0] = null;
+                countDownLatch.countDown();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (!response.isSuccessful()) res[0] = null;
+
+                    res[0] = responseBody.string();
+                    Log.d("valco", res[0]);
+                    countDownLatch.countDown();
+                }
+            }
+        });
+        countDownLatch.await();
+        return res[0];
+
+    }
+
+    public static String getBookByISBN(String q) throws InterruptedException {
+        final String[] res = {""};
+        Response response = null;
+
+        HttpUrl.Builder urlBuilder = HttpUrl.parse("https://sapienzalib.herokuapp.com/book/"+q).newBuilder();
+        String url = urlBuilder.build().toString();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("access-token", JWT)
+                .build();
+
+        CountDownLatch countDownLatch = new CountDownLatch(1);
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                res[0] = null;
+                countDownLatch.countDown();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (!response.isSuccessful()) res[0] = null;
+
+                    res[0] = responseBody.string();
+                    countDownLatch.countDown();
+                }
+            }
+        });
+        countDownLatch.await();
+        return res[0];
+    }
+
 }

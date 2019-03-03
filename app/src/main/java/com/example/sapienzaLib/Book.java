@@ -1,13 +1,14 @@
 package com.example.sapienzaLib;
 
 public class Book {
-    private String title,author,description,thumbnail;
+    private String title,author,description,thumbnail,isbn;
 
-    public Book(String title, String author, String description, String thumbnail) {
+    public Book(String title, String author, String description, String thumbnail,String isbn) {
         this.title = title;
         this.author = author;
         this.description = description;
         this.thumbnail = thumbnail;
+        this.isbn = isbn;
     }
 
     public String getTitle() {
@@ -40,5 +41,13 @@ public class Book {
 
     public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 }

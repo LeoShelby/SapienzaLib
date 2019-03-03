@@ -68,6 +68,7 @@ public class SearchFragment extends Fragment {
                 intent.putExtra("author",selectedBook.getAuthor());
                 intent.putExtra("description",selectedBook.getDescription());
                 intent.putExtra("thumbnail",selectedBook.getThumbnail());
+                intent.putExtra("isbn",selectedBook.getIsbn());
                 startActivity(intent);
 
             }
@@ -94,8 +95,10 @@ public class SearchFragment extends Fragment {
                             String title = oneObject.getString("title");
                             String desc = oneObject.getString("description");
                             String thumb = oneObject.getString("thumbnail");
+                            String auth = (String) oneObject.getJSONArray("authors").get(0);
+                            String isbn = oneObject.getString("isbn");
 
-                            mBooks.add(new Book(title, "Frah Quintale", desc, thumb));
+                            mBooks.add(new Book(title, auth, desc, thumb,isbn));
 
                         } catch (JSONException e) {
                             // Oops

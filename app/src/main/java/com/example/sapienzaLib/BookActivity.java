@@ -14,8 +14,9 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-public class BookActivity extends AppCompatActivity {
+public class BookActivity extends BaseBaseActivity {
 
+    String isbn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,8 +28,8 @@ public class BookActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BackendUtilities.bookABook("9780984881246");
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                BackendUtilities.bookABook(isbn);
+                Snackbar.make(view, "Booked !", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -43,6 +44,7 @@ public class BookActivity extends AppCompatActivity {
         String author = i.getStringExtra("author");
         String description = i.getStringExtra("description");
         String thumbnail = i.getStringExtra("thumbnail");
+        isbn = i.getStringExtra("isbn");
 
         TextView tTitle = findViewById(R.id.book_title);
         TextView tAuthor = findViewById(R.id.book_author);

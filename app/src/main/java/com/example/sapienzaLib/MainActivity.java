@@ -30,11 +30,12 @@ import com.squareup.picasso.Picasso;
 
 import org.apache.commons.lang3.text.WordUtils;
 
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import static java.security.AccessController.getContext;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends BaseBaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
@@ -199,6 +200,5 @@ public class MainActivity extends AppCompatActivity
         t.replace(R.id.fragment,f);
         t.commit();
     }
-
 
 }
