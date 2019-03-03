@@ -95,7 +95,7 @@ public class CalendarFragment extends Fragment {
                                 String auth = (String) oneObject.getJSONArray("authors").get(0);
                                 String isbn = oneObject.getString("isbn");
 
-                                bookings.add(new Booking(title, auth, "", "",dateClicked, 0));
+                                bookings.add(new Booking(title, auth, "", "",dateClicked, 0, isbn));
                             } catch (JSONException e) {
                                 // Oops
                             }

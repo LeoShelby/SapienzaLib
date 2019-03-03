@@ -9,15 +9,19 @@ public class Booking {
     private String thumbnail;
     private Date date;
     private int copies;
+    private String isbn;
 
-    public Booking(String title, String author, String description, String thumbnail, Date date, int copies) {
+    public Booking(String title, String author, String description, String thumbnail, Date date, int copies, String isbn) {
         this.title = title;
         this.author = author;
         this.description = description;
         this.thumbnail = thumbnail;
         this.date = date;
         this.copies = copies;
+        this.isbn = isbn;
     }
+
+    public String getIsbn() { return isbn; }
 
     public String getTitle() {
         return title;
@@ -50,6 +54,10 @@ public class Booking {
     public void setDescription(String description) {this.description = description;}
 
     public void setThumbnail(String thumbnail) { this.thumbnail = thumbnail;}
+
+    public void setCopies(int copies) {this.copies = copies;}
+
+    public void setIsbn(String isbn) {this.isbn = isbn;}
 }
 
 
