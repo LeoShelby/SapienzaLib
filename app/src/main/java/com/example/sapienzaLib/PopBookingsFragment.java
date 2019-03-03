@@ -47,10 +47,12 @@ public class PopBookingsFragment extends ListFragment {
                     String title = oneObject.getString("title");
                     String authors = oneObject.getString("authors");
                     String copies =  oneObject.getString("copies");
+                    String description =  oneObject.getString("description");
+                    String thumbnail =  oneObject.getString("thumbnail");
 
                     if(copies.equals(""))copies = "0";
 
-                    bookingList.add(new Booking(title, authors, null,null, null, Integer.parseInt(copies)));
+                    bookingList.add(new Booking(title, authors, description,thumbnail, null, Integer.parseInt(copies)));
 
                 } catch (JSONException e) {
                     // Oops
