@@ -190,6 +190,38 @@ public class BackendUtilities {
 
     }
 
+    public static void wishaBook(String isbn){
+
+        RequestBody requestBody = new FormBody.Builder()
+                .add("isbn", isbn)
+                .build();
+
+        HttpUrl.Builder urlBuilder = HttpUrl.parse("https://sapienzalib.herokuapp.com/bookingwish").newBuilder();
+        String url = urlBuilder.build().toString();
+
+        Log.d("TOKEND", JWT);
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("access-token", JWT)
+                .post(requestBody)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "Error booking.", e);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    Log.d(TAG, "Wished");
+                }
+            }
+        });
+
+    }
+
     public static String getPopularBooks() throws InterruptedException{
         final String[] res = {""};
         Response response = null;

@@ -3,7 +3,6 @@ package com.example.sapienzaLib;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,11 +11,16 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.squareup.picasso.Picasso;
+
+import java.util.Date;
 
 public class BookActivity extends BaseBaseActivity {
 
     String isbn;
+    String date = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,12 +28,22 @@ public class BookActivity extends BaseBaseActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionMenu fab = findViewById(R.id.fab);
+        FloatingActionButton fbook = findViewById(R.id.fabAddSubcategory);
+        fbook.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 BackendUtilities.bookABook(isbn);
-                Snackbar.make(view, "Booked !", Snackbar.LENGTH_LONG)
+                Snackbar.make(v, "You succesfully booked it", Snackbar.LENGTH_SHORT)
+                        .setAction("Action", null).show();
+            }
+        });
+        FloatingActionButton fwish = findViewById(R.id.fabAddProduct);
+        fwish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BackendUtilities.wishaBook(isbn);
+                Snackbar.make(v, "Hope you can read it soon", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
             }
         });
@@ -45,11 +59,17 @@ public class BookActivity extends BaseBaseActivity {
         String description = i.getStringExtra("description");
         String thumbnail = i.getStringExtra("thumbnail");
         isbn = i.getStringExtra("isbn");
+        if(i.hasExtra("date")){
+            date = "Da restituire : " + i.getStringExtra("date");
+        }
 
         TextView tTitle = findViewById(R.id.book_title);
         TextView tAuthor = findViewById(R.id.book_author);
         TextView tDescription = findViewById(R.id.description_book);
         ImageView tThumbnail = findViewById(R.id.book_thumb);
+        TextView tExpire = findViewById(R.id.book_expire);
+
+        tExpire.setText(date);
 
         tTitle.setText(title);
         tAuthor.setText(author);

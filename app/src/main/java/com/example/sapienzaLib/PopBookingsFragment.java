@@ -24,13 +24,9 @@ import java.util.Date;
 public class PopBookingsFragment extends ListFragment {
 
     ArrayList<Booking> bookingList = new ArrayList<>();
+    BookingListAdapter adapter;
 
     public PopBookingsFragment(){
-
-        //Booking book1 = new Booking("Harry Potter","J.K.Rowling", "descrizione matta", "immagine matta", new Date("03/03/2019"));
-        //Booking book2 = new Booking("SuperLongMegaGigaTestBreaKTitle","author2", "descrizione matta", "immagine matta", new Date("05/06/2019"));
-        //bookingList.add(book1);
-        //bookingList.add(book2);
 
         String response="";
 
@@ -53,12 +49,12 @@ public class PopBookingsFragment extends ListFragment {
 
                     if(copies.equals(""))copies = "0";
 
-                    bookingList.add(new Booking(title, authors, description,thumbnail, null, Integer.parseInt(copies),isbn));
-
+                    bookingList.add(new Booking(title, authors, description,thumbnail, null, Integer.parseInt(copies),isbn,""));
                 } catch (JSONException e) {
                     // Oops
                 }
             }
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (JSONException e) {
@@ -75,7 +71,7 @@ public class PopBookingsFragment extends ListFragment {
 
         View lw = inflater.inflate(R.layout.pop_bookings_fragment, container, false);
 
-        BookingListAdapter adapter = new BookingListAdapter(getActivity().getBaseContext(), R.layout.booking_view_layout, bookingList, "Pop");
+        adapter = new BookingListAdapter(getActivity().getBaseContext(), R.layout.booking_view_layout, bookingList, "Pop");
         setListAdapter(adapter);
 
 

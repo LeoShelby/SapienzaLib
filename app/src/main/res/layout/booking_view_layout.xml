@@ -38,7 +38,7 @@
             android:gravity="left"
             android:text="Title"
             android:textColor="#03396c"
-            android:textSize="25dp"
+            android:textSize="19sp"
             android:textStyle="bold" />
 
         <TextView
@@ -48,7 +48,7 @@
             android:layout_below="@+id/textView2"
             android:paddingTop="10dp"
             android:text="Author"
-            android:textSize="15dp" />
+            android:textSize="13dp" />
 
         <TextView
             android:id="@+id/textView1"

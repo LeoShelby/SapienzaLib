@@ -87,6 +87,7 @@ public class SearchFragment extends Fragment {
                     String response = BackendUtilities.getBookByQuery(currentQuery);
                     JSONObject jObject = new JSONObject(response);
                     JSONArray jArray = jObject.getJSONArray("items");
+                    Log.d("valco", response);
                     for (int i=0; i < jArray.length(); i++)
                     {
                         try {
@@ -95,7 +96,7 @@ public class SearchFragment extends Fragment {
                             String title = oneObject.getString("title");
                             String desc = oneObject.getString("description");
                             String thumb = oneObject.getString("thumbnail");
-                            String auth = (String) oneObject.getJSONArray("authors").get(0);
+                            String auth = oneObject.getString("author");
                             String isbn = oneObject.getString("isbn");
 
                             mBooks.add(new Book(title, auth, desc, thumb,isbn));

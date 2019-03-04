@@ -39,30 +39,33 @@
 
                 <TextView
                     android:id="@+id/book_title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
                     android:text="Moby Dick"
-                    android:textAlignment="viewStart"
-                    android:textSize="24sp" />
+                    android:textAlignment="center"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/book_author"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Girolami F."
-                    android:textAlignment="viewStart" />
+                    android:textAlignment="center" />
             </LinearLayout>
 
             <TextView
-                android:id="@+id/textView7"
+                android:id="@+id/book_expire"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight=".2"
                 android:gravity="bottom"
                 android:text="In scadenza il : 22-11-19"
                 android:textAlignment="textEnd"
-                android:textSize="14sp" />
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="18sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 <ScrollView

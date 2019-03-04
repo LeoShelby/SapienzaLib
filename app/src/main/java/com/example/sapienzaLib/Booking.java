@@ -10,8 +10,9 @@ public class Booking {
     private Date date;
     private int copies;
     private String isbn;
+    private String until;
 
-    public Booking(String title, String author, String description, String thumbnail, Date date, int copies, String isbn) {
+    public Booking(String title, String author, String description, String thumbnail, Date date, int copies, String isbn, String until) {
         this.title = title;
         this.author = author;
         this.description = description;
@@ -19,6 +20,15 @@ public class Booking {
         this.date = date;
         this.copies = copies;
         this.isbn = isbn;
+        this.until = until;
+    }
+
+    public String getUntil() {
+        return until;
+    }
+
+    public void setUntil(String until) {
+        this.until = until;
     }
 
     public String getIsbn() { return isbn; }

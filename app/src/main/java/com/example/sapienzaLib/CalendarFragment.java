@@ -2,6 +2,7 @@ package com.example.sapienzaLib;
 
 
 import android.app.usage.UsageEvents;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.CalendarView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -36,9 +38,9 @@ public class CalendarFragment extends Fragment {
     private CompactCalendarView calendarView;
     private ListView listViewBooking;
     private TextView textMonth;
-    private SimpleDateFormat sdf;
+    private SimpleDateFormat sdf,sdff;
     private ArrayList<Booking> bookings = new ArrayList<>();
-    private HashMap<String, ArrayList<BookingInfo>> bookList = new HashMap<>();
+    private HashMap<String, ArrayList<Booking>> bookList = new HashMap<>();
     private CalendarListAdapter adapter;
 
     public CalendarFragment() {
@@ -62,6 +64,9 @@ public class CalendarFragment extends Fragment {
         sdf = new SimpleDateFormat(); // creo l'oggetto
         sdf.applyPattern("MMMM yyyy");
 
+        sdff = new SimpleDateFormat(); // creo l'oggetto
+        sdff.applyPattern("dd MMMM yyyy");
+
         adapter = new CalendarListAdapter(getActivity(),bookings);
         listViewBooking.setAdapter(adapter);
 
@@ -74,39 +79,15 @@ public class CalendarFragment extends Fragment {
                 Calendar c = Calendar.getInstance();
                 c.setTime(dateClicked);
                 String until = c.get(Calendar.YEAR) + "-" +c.get(Calendar.MONTH)  +"-"+ c.get(Calendar.DATE);
-                ArrayList<BookingInfo> bi = bookList.get(until);
+                ArrayList<Booking> bi = bookList.get(until);
                 bookings.clear();
+                adapter.notifyDataSetChanged();
                 if(bi == null){
                     return;
                 }
-                for (BookingInfo b: bi){
-                    try {
-                        String book = BackendUtilities.getBookByISBN(b.getIsbn());
-                        JSONObject jObject = new JSONObject(book);
-                        JSONArray jArray = jObject.getJSONArray("items");
-                        for (int i=0; i < jArray.length(); i++)
-                        {
-                            try {
-                                JSONObject oneObject = jArray.getJSONObject(i);
-                                // Pulling items from the array
-                                String title = oneObject.getString("title");
-                                String desc = oneObject.getString("description");
-                                String thumb = oneObject.getString("thumbnail");
-                                String auth = (String) oneObject.getJSONArray("authors").get(0);
-                                String isbn = oneObject.getString("isbn");
-
-                                bookings.add(new Booking(title, auth, "", "",dateClicked, 0, isbn));
-                            } catch (JSONException e) {
-                                // Oops
-                            }
-                        }
-
-
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                for(Booking b : bi){
+                    b.setDate(dateClicked);
+                    bookings.add(b);
                 }
                 adapter.notifyDataSetChanged();
 
@@ -119,7 +100,20 @@ public class CalendarFragment extends Fragment {
                 textMonth.setText(dataStr);
             }
         });
-
+        listViewBooking.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Booking b = bookings.get(position);
+                Intent intent = new Intent(getContext(), BookActivity.class);
+                intent.putExtra("title",b.getTitle());
+                intent.putExtra("author",b.getAuthor());
+                intent.putExtra("description",b.getDescription());
+                intent.putExtra("thumbnail",b.getThumbnail());
+                intent.putExtra("isbn",b.getIsbn());
+                intent.putExtra("date",sdff.format(b.getDate()));
+                startActivity(intent);
+            }
+        });
         setupCalendar();
 
         return rootView;
@@ -133,10 +127,20 @@ public class CalendarFragment extends Fragment {
             for (int i=0; i < jArray.length(); i++)
             {
                 try {
+
+
                     JSONObject oneObject = jArray.getJSONObject(i);
+
+                    Log.d("valco", oneObject.toString());
                     // Pulling items from the array
                     String isbn = oneObject.getString("isbn");
                     String until = oneObject.getString("until");
+                    String title = oneObject.getString("title");
+                    String desc = oneObject.getString("description");
+                    String thumb = oneObject.getString("thumbnail");
+                    String auth = oneObject.getString("author");
+                    String gid = oneObject.getString("gid");
+
 
                     int month = Integer.parseInt(until.split("-")[1]);
                     int day = Integer.parseInt(until.split("-")[2]);
@@ -145,11 +149,11 @@ public class CalendarFragment extends Fragment {
                     Calendar dd = Calendar.getInstance();
                     dd.set(year,month,day,0,0);
 
-                    BookingInfo bookingInfo = new BookingInfo(isbn,until);
+                    Booking booking = new Booking(title,auth,desc,thumb,null,0,isbn,until);
                     if(bookList.get(until) == null){
                         bookList.put(until, new ArrayList<>());
                     }
-                    bookList.get(until).add(bookingInfo);
+                    bookList.get(until).add(booking);
                     Event ev = new Event(Color.BLUE, dd.getTimeInMillis());
                     calendarView.addEvent(ev);
 
