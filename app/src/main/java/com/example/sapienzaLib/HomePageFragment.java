@@ -7,8 +7,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Date;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -23,6 +30,25 @@ public class HomePageFragment extends Fragment {
         CircleImageView cim = rootView.findViewById(R.id.image_home);
         Picasso.with(getActivity()).load(getActivity().getIntent().getStringExtra("user_pic")).fit().into(cim);
         //rootView.findViewById(R.id.card).setBackgroundResource(R.drawable.side_nav_bar);
+
+        int num = 0;
+
+        try {
+            String response = BackendUtilities.getAllBookings();
+            JSONObject jObject = new JSONObject(response);
+            JSONArray jArray = jObject.getJSONArray("items");
+            num = jArray.length();
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        TextView numRead = rootView.findViewById(R.id.num_home);
+
+        numRead.setText("Libri letti questo mese: " + num);
+
         return rootView;
     }
 
