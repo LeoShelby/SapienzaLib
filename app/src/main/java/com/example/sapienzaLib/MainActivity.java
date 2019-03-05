@@ -150,6 +150,8 @@ public class MainActivity extends BaseBaseActivity
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_info) {
+            Intent intent = new Intent(this, InfoActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_logout) {
 

@@ -2,10 +2,12 @@ package com.example.sapienzaLib;
 
 
 import android.app.usage.UsageEvents;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +25,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,6 +33,13 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -121,51 +131,67 @@ public class CalendarFragment extends Fragment {
 
     public void setupCalendar(){
         try {
-            String result = BackendUtilities.getAllBookings();
-            JSONObject jObject = new JSONObject(result);
-            JSONArray jArray = jObject.getJSONArray("items");
-            for (int i=0; i < jArray.length(); i++)
-            {
-                try {
-
-
-                    JSONObject oneObject = jArray.getJSONObject(i);
-
-                    Log.d("valco", oneObject.toString());
-                    // Pulling items from the array
-                    String isbn = oneObject.getString("isbn");
-                    String until = oneObject.getString("until");
-                    String title = oneObject.getString("title");
-                    String desc = oneObject.getString("description");
-                    String thumb = oneObject.getString("thumbnail");
-                    String auth = oneObject.getString("author");
-                    String gid = oneObject.getString("gid");
-
-
-                    int month = Integer.parseInt(until.split("-")[1]);
-                    int day = Integer.parseInt(until.split("-")[2]);
-                    int year = Integer.parseInt(until.split("-")[0]);
-
-                    Calendar dd = Calendar.getInstance();
-                    dd.set(year,month,day,0,0);
-
-                    Booking booking = new Booking(title,auth,desc,thumb,null,0,isbn,until);
-                    if(bookList.get(until) == null){
-                        bookList.put(until, new ArrayList<>());
-                    }
-                    bookList.get(until).add(booking);
-                    Event ev = new Event(Color.BLUE, dd.getTimeInMillis());
-                    calendarView.addEvent(ev);
-
-                } catch (JSONException e) {
-                    // Oops
+            final String[] result = {""};
+            Request request = BackendUtilities.getAllBookings();
+            (BackendUtilities.client).newCall((Request) request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
                 }
-            }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    try (ResponseBody responseBody = response.body()) {
+                        if (!response.isSuccessful()) result[0] = null;
+
+                        result[0] = responseBody.string();
+                        Log.d("valco", result[0]);
+                        JSONObject jObject = new JSONObject(result[0]);
+                        JSONArray jArray = jObject.getJSONArray("items");
+                        for (int i=0; i < jArray.length(); i++)
+                        {
+                            try {
+
+
+                                JSONObject oneObject = jArray.getJSONObject(i);
+
+                                Log.d("valco", oneObject.toString());
+                                // Pulling items from the array
+                                String isbn = oneObject.getString("isbn");
+                                String until = oneObject.getString("until");
+                                String title = oneObject.getString("title");
+                                String desc = oneObject.getString("description");
+                                String thumb = oneObject.getString("thumbnail");
+                                String auth = oneObject.getString("author");
+                                String gid = oneObject.getString("gid");
+
+
+                                int month = Integer.parseInt(until.split("-")[1]);
+                                int day = Integer.parseInt(until.split("-")[2]);
+                                int year = Integer.parseInt(until.split("-")[0]);
+
+                                Calendar dd = Calendar.getInstance();
+                                dd.set(year,month,day,0,0);
+
+                                Booking booking = new Booking(title,auth,desc,thumb,null,0,isbn,until);
+                                if(bookList.get(until) == null){
+                                    bookList.put(until, new ArrayList<>());
+                                }
+                                bookList.get(until).add(booking);
+                                Event ev = new Event(Color.BLUE, dd.getTimeInMillis());
+                                calendarView.addEvent(ev);
+
+                            } catch (JSONException e) {
+                                // Oops
+                            }
+                        }                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
         } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
+
 
 }

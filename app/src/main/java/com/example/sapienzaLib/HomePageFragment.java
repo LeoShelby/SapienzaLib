@@ -34,13 +34,12 @@ public class HomePageFragment extends Fragment {
         int num = 0;
 
         try {
-            String response = BackendUtilities.getAllBookings();
+            //String response = BackendUtilities.getAllBookings();
+            String response = "";
             JSONObject jObject = new JSONObject(response);
             JSONArray jArray = jObject.getJSONArray("items");
             num = jArray.length();
 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -99,6 +99,9 @@ public class SearchFragment extends Fragment {
                             String auth = oneObject.getString("author");
                             String isbn = oneObject.getString("isbn");
 
+                            if(desc.equals(""))
+                                desc = "Questo libro non possiede una descrizione";
+
                             mBooks.add(new Book(title, auth, desc, thumb,isbn));
 
                         } catch (JSONException e) {
