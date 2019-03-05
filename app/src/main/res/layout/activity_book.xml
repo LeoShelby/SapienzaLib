@@ -30,7 +30,8 @@
             android:id="@+id/fabAddProduct"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_wish"
+            android:src="@drawable/ic_love_white"
+            app:fab_colorNormal="#44AA93"
             fab:fab_size="mini"
             fab:fab_label="Add to wishlist"/>
 
@@ -39,6 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/fab_add"
+            app:fab_colorNormal="#44AA93"
             fab:fab_label="Book it"
             fab:fab_size="mini" />
 

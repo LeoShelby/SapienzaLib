@@ -147,7 +147,7 @@ public class CalendarFragment extends Fragment {
                         context.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                ((TextView)context.findViewById(R.id.loading_text)).setVisibility(View.GONE);
+                                context.findViewById(R.id.loading_text).setVisibility(View.GONE);
                             }
                         });
                         result[0] = responseBody.string();

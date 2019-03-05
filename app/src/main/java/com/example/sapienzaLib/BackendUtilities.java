@@ -159,67 +159,11 @@ public class BackendUtilities {
     }
 
     public static void bookABook(String isbn){
-
-        RequestBody requestBody = new FormBody.Builder()
-                .add("isbn", isbn)
-                .build();
-
-        HttpUrl.Builder urlBuilder = HttpUrl.parse("https://sapienzalib.herokuapp.com/booking").newBuilder();
-        String url = urlBuilder.build().toString();
-
-        Log.d("TOKEND", JWT);
-        Request request = new Request.Builder()
-                .url(url)
-                .addHeader("access-token", JWT)
-                .post(requestBody)
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.e(TAG, "Error booking.", e);
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    Log.d(TAG, "Booked");
-                }
-            }
-        });
-
+        bookStuff("booking", isbn);
     }
 
     public static void wishaBook(String isbn){
-
-        RequestBody requestBody = new FormBody.Builder()
-                .add("isbn", isbn)
-                .build();
-
-        HttpUrl.Builder urlBuilder = HttpUrl.parse("https://sapienzalib.herokuapp.com/bookingwish").newBuilder();
-        String url = urlBuilder.build().toString();
-
-        Log.d("TOKEND", JWT);
-        Request request = new Request.Builder()
-                .url(url)
-                .addHeader("access-token", JWT)
-                .post(requestBody)
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.e(TAG, "Error booking.", e);
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    Log.d(TAG, "Wished");
-                }
-            }
-        });
-
+        bookStuff("bookingwish", isbn);
     }
 
     public static Request getPopularBooks() throws InterruptedException{
@@ -352,4 +296,42 @@ public class BackendUtilities {
 
     }
 
+    public static void unbookABook(String isbn) {
+        bookStuff("returnbook", isbn);
+    }
+
+    public static void unwishaBook(String isbn) {
+        bookStuff("unwishbook", isbn);
+    }
+
+    public static void bookStuff(String what, String isbn){
+        RequestBody requestBody = new FormBody.Builder()
+                .add("isbn", isbn)
+                .build();
+
+        HttpUrl.Builder urlBuilder = HttpUrl.parse("https://sapienzalib.herokuapp.com/"+what).newBuilder();
+        String url = urlBuilder.build().toString();
+
+        Log.d("TOKEND", JWT);
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("access-token", JWT)
+                .post(requestBody)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "Error booking.", e);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+
+                    Log.d(TAG, responseBody.string()    );
+                }
+            }
+        });
+    }
 }

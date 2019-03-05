@@ -20,7 +20,9 @@ import java.util.Date;
 public class BookActivity extends BaseBaseActivity {
 
     String isbn;
+    boolean booked,wished;
     String date = "";
+    String dater = "";
     FloatingActionButton fbook,fwish;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,21 +34,42 @@ public class BookActivity extends BaseBaseActivity {
 
         FloatingActionMenu fab = findViewById(R.id.fab);
         fbook = findViewById(R.id.fabAddSubcategory);
+        fwish = findViewById(R.id.fabAddProduct);
         fbook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BackendUtilities.bookABook(isbn);
-                Snackbar.make(v, "You succesfully booked it", Snackbar.LENGTH_SHORT)
-                        .setAction("Action", null).show();
+                if(booked){
+                    fwish.setVisibility(View.VISIBLE);
+                    fbook.setLabelText("Book it");
+                    fbook.setImageResource(R.drawable.fab_add);
+                    TextView tExpire = findViewById(R.id.book_expire);
+                    tExpire.setText("");
+                    BackendUtilities.unbookABook(isbn);
+                    booked = false;
+                }
+                else{
+                    fwish.setVisibility(View.GONE);
+                    fbook.setLabelText("Return");
+                    fbook.setImageResource(R.drawable.ic_minus_white);
+                    BackendUtilities.bookABook(isbn);
+                    booked = true;
+                }
+
+
             }
         });
-        fwish = findViewById(R.id.fabAddProduct);
         fwish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BackendUtilities.wishaBook(isbn);
-                Snackbar.make(v, "Hope you can read it soon", Snackbar.LENGTH_SHORT)
-                        .setAction("Action", null).show();
+                if(wished){
+                    fwish.setLabelText("Add to wishlist");
+                    BackendUtilities.unwishaBook(isbn);
+                }
+                else{
+                    fwish.setLabelText("Remove from wishlist");
+                    BackendUtilities.wishaBook(isbn);
+                }
+                wished = !wished;
             }
         });
 
@@ -62,12 +85,22 @@ public class BookActivity extends BaseBaseActivity {
         String thumbnail = i.getStringExtra("thumbnail");
         isbn = i.getStringExtra("isbn");
         if(i.hasExtra("date")){
+            dater = i.getStringExtra("date");
+            date = "To return: " + dater;
             fwish.setVisibility(View.GONE);
             fbook.setLabelText("Return");
-            date = "Da restituire : " + i.getStringExtra("date");
+            fbook.setImageResource(R.drawable.ic_minus_white);
+            booked = true;
+        }
+        else{
+            booked = false;
         }
         if(i.hasExtra("wished")){
-            fwish.setLabelText("Unwish");
+            fwish.setLabelText("Remove from wishlist");
+            wished=true;
+        }
+        else{
+            wished=false;
         }
 
         TextView tTitle = findViewById(R.id.book_title);
@@ -75,7 +108,6 @@ public class BookActivity extends BaseBaseActivity {
         TextView tDescription = findViewById(R.id.description_book);
         ImageView tThumbnail = findViewById(R.id.book_thumb);
         TextView tExpire = findViewById(R.id.book_expire);
-
         tExpire.setText(date);
 
         tTitle.setText(title);
