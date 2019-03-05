@@ -105,6 +105,7 @@ public class ExpBookingsFragment extends ListFragment {
                 intent.putExtra("author",bookingList.get(position).getAuthor());
                 intent.putExtra("description",bookingList.get(position).getDescription());
                 intent.putExtra("thumbnail",bookingList.get(position).getThumbnail());
+                intent.putExtra("isbn",bookingList.get(position).getIsbn());
                 startActivity(intent);
             }
         });
