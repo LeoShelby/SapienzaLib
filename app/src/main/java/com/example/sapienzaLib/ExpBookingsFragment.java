@@ -56,7 +56,7 @@ public class ExpBookingsFragment extends ListFragment {
                     int day = Integer.parseInt(until.split("-")[2]);
                     int year = Integer.parseInt(until.split("-")[0]);
 
-                    Date aux = new Date(year-1900, month-1, day);
+                    Date aux = new Date(year-1900, month, day);
 
                     String date = month + "/" + day + "/" + year;
                     int diffDay = diffDate(date);
