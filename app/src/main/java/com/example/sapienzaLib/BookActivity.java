@@ -28,6 +28,7 @@ public class BookActivity extends BaseBaseActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         FloatingActionMenu fab = findViewById(R.id.fab);
         FloatingActionButton fbook = findViewById(R.id.fabAddSubcategory);
         fbook.setOnClickListener(new View.OnClickListener() {

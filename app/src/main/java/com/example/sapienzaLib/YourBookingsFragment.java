@@ -30,7 +30,6 @@ public class YourBookingsFragment extends ListFragment {
 
     public YourBookingsFragment(){
 
-
         String response="";
 
         try {
@@ -45,19 +44,24 @@ public class YourBookingsFragment extends ListFragment {
                     // Pulling items from the array
                     String isbn = oneObject.getString("isbn");
                     String until = oneObject.getString("until");
+                    String title = oneObject.getString("title");
+                    String author = oneObject.getString("author");
+                    String description = oneObject.getString("description");
+                    String thumbnail = oneObject.getString("thumbnail");
 
                     int month = Integer.parseInt(until.split("-")[1]);
                     int day = Integer.parseInt(until.split("-")[2]);
                     int year = Integer.parseInt(until.split("-")[0]);
 
+                    Date aux = new Date(year-1900, month-1, day);
+
                     String date = month + "/" + day + "/" + year;
                     int diffDay = diffDate(date);
 
-                    //Log.e("AOAO", "expirante: "+isbn + "diff= " +diffDay + "until: " + date);
+                    //Log.e("daa","date: " +aux);
+                    //if(diffDay < 8)getExpBook(isbn,aux);
 
-                    Date aux = new Date(year-1900, month-1, day);
-                    Log.e("daa","date: " +aux);
-                    if(diffDay >= 8)getExpBook(isbn,aux);
+                    if(diffDay >= 8) bookingList.add(new Booking(title, author, description, thumbnail ,aux , 0, isbn, ""));
 
                 } catch (JSONException e) {
                     // Oops
@@ -77,12 +81,13 @@ public class YourBookingsFragment extends ListFragment {
         //return inflater.inflate(R.layout.exp_bookings_fragment, container, false);
 
         //Create the Person objects
-        Booking book1 = new Booking("Harry Potter","J.K.Rowling", "descrizione matta", "immagine matta", new Date("03/03/2019"),0, "","");
-        Booking book2 = new Booking("SuperLongMegaGigaTestBreaKTitle","author2", "descrizione matta", "immagine matta", new Date("05/06/2019"),0, "","");
+        //Booking book1 = new Booking("Harry Potter","J.K.Rowling", "descrizione matta", "immagine matta", new Date("03/03/2019"),0, "","");
+        //Booking book2 = new Booking("SuperLongMegaGigaTestBreaKTitle","author2", "descrizione matta", "immagine matta", new Date("05/06/2019"),0, "","");
+
         View lw = inflater.inflate(R.layout.your_bookings_fragment, container, false);
 
 
-        BookingListAdapter adapter = new BookingListAdapter(getActivity().getBaseContext(), R.layout.booking_view_layout, bookingList, "Exp");
+        BookingListAdapter adapter = new BookingListAdapter(getActivity().getBaseContext(), R.layout.booking_view_layout, bookingList, "Fresh");
         setListAdapter(adapter);
 
 
@@ -137,37 +142,6 @@ public class YourBookingsFragment extends ListFragment {
         }
 
         return diffDays;
-    }
-
-    private void getExpBook(String isbn, Date until){
-        try {
-            String book = BackendUtilities.getBookByISBN(isbn);
-            JSONObject jObject = new JSONObject(book);
-            JSONArray jArray = jObject.getJSONArray("items");
-            //Log.e("oo", "len= "+ jArray.length());
-            for (int i=0; i < jArray.length(); i++)
-            {
-                try {
-                    JSONObject oneObject = jArray.getJSONObject(i);
-                    // Pulling items from the array
-                    String title = oneObject.getString("title");
-                    String desc = oneObject.getString("description");
-                    String thumb = oneObject.getString("thumbnail");
-                    String auth = (String) oneObject.getJSONArray("authors").get(0);
-                    //String isbn = oneObject.getString("isbn");
-
-                    bookingList.add(new Booking(title, auth, desc, thumb,until , 0, isbn));
-                } catch (JSONException e) {
-                    // Oops
-                }
-            }
-
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
 
 }

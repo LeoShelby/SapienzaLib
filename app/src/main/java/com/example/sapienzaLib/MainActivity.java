@@ -194,10 +194,10 @@ public class MainActivity extends BaseBaseActivity
         t.commit();
     }
 
-    public void switchToFragmentTrueHome(){
+    public void switchToFragmentTrueHome() {
         Fragment f = new HomePageFragment();
         FragmentTransaction t = getSupportFragmentManager().beginTransaction();
-        t.replace(R.id.fragment,f);
+        t.replace(R.id.fragment, f);
         t.commit();
     }
 
