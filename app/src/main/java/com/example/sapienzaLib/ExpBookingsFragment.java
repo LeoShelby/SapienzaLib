@@ -17,6 +17,7 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,54 +25,79 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+
 
 public class ExpBookingsFragment extends ListFragment {
 
     ArrayList<Booking> bookingList = new ArrayList<>();
+    BookingListAdapter adapter;
 
     public ExpBookingsFragment(){
-
-
-        String response="";
-
-
         try {
-            //response = BackendUtilities.getAllBookings();
-            response = "";
-            JSONObject jObject = new JSONObject(response);
-            JSONArray jArray = jObject.getJSONArray("items");
-
-            for (int i=0; i < jArray.length(); i++)
-            {
-                try {
-                    JSONObject oneObject = jArray.getJSONObject(i);
-                    // Pulling items from the array
-                    String isbn = oneObject.getString("isbn");
-                    String until = oneObject.getString("until");
-                    String title = oneObject.getString("title");
-                    String author = oneObject.getString("author");
-                    String description = oneObject.getString("description");
-                    String thumbnail = oneObject.getString("thumbnail");
-
-                    int month = Integer.parseInt(until.split("-")[1]);
-                    int day = Integer.parseInt(until.split("-")[2]);
-                    int year = Integer.parseInt(until.split("-")[0]);
-
-                    Date aux = new Date(year-1900, month, day);
-
-                    String date = month + "/" + day + "/" + year;
-                    int diffDay = diffDate(date);
-
-
-                    if(diffDay < 8) bookingList.add(new Booking(title, author, description, thumbnail ,aux , 0, isbn, ""));
-
-                } catch (JSONException e) {
-                    // Oops
+            final String[] result = {""};
+            Request request = BackendUtilities.getAllBookings();
+            (BackendUtilities.client).newCall((Request) request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
                 }
-            }
-        } catch (JSONException e) {
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    try (ResponseBody responseBody = response.body()) {
+                        if (!response.isSuccessful()) result[0] = null;
+
+                        result[0] = responseBody.string();
+                        JSONObject jObject = new JSONObject(result[0]);
+                        JSONArray jArray = jObject.getJSONArray("items");
+
+                        for (int i=0; i < jArray.length(); i++)
+                        {
+                            try {
+                                JSONObject oneObject = jArray.getJSONObject(i);
+                                // Pulling items from the array
+                                String isbn = oneObject.getString("isbn");
+                                String until = oneObject.getString("until");
+                                String title = oneObject.getString("title");
+                                String author = oneObject.getString("author");
+                                String description = oneObject.getString("description");
+                                String thumbnail = oneObject.getString("thumbnail");
+
+                                int month = Integer.parseInt(until.split("-")[1]);
+                                int day = Integer.parseInt(until.split("-")[2]);
+                                int year = Integer.parseInt(until.split("-")[0]);
+
+                                Date aux = new Date(year-1900, month-1, day);
+
+                                String date = month+1 + "/" + day + "/" + year;
+                                int diffDay = diffDate(date);
+
+                                if(diffDay < 8){
+                                    bookingList.add(new Booking(title, author, description, thumbnail ,aux , 0, isbn, ""));
+                                }
+
+                            } catch (JSONException e) {
+                                // Oops
+                            }
+                        } getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
 
     }
 
@@ -81,7 +107,7 @@ public class ExpBookingsFragment extends ListFragment {
         View lw = inflater.inflate(R.layout.exp_bookings_fragment, container, false);
 
 
-        BookingListAdapter adapter = new BookingListAdapter(getActivity().getBaseContext(), R.layout.booking_view_layout, bookingList, "Exp");
+        adapter = new BookingListAdapter(getActivity().getBaseContext(), R.layout.booking_view_layout, bookingList, "Exp");
         setListAdapter(adapter);
 
         // Inflate the layout for this fragment
@@ -137,36 +163,4 @@ public class ExpBookingsFragment extends ListFragment {
 
         return diffDays;
     }
-
-
-    /*
-    private void getExpBook(String isbn, Date until){
-        try {
-            String book = BackendUtilities.getBookByISBN(isbn);
-            JSONObject jObject = new JSONObject(book);
-            JSONArray jArray = jObject.getJSONArray("items");
-            for (int i=0; i < jArray.length(); i++)
-            {
-                try {
-                    JSONObject oneObject = jArray.getJSONObject(i);
-                    String title = oneObject.getString("title");
-                    String desc = oneObject.getString("description");
-                    String thumb = oneObject.getString("thumbnail");
-                    String auth = oneObject.getString("authors");
-
-                    bookingList.add(new Booking(title, auth, desc, thumb,until , 0, isbn, ""));
-                } catch (JSONException e) {
-                    // Oops
-                }
-            }
-
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-    }
-    */
 }

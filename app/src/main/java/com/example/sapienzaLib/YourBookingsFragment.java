@@ -17,58 +17,85 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+
 
 public class YourBookingsFragment extends ListFragment {
 
     ArrayList<Booking> bookingList = new ArrayList<>();
+    BookingListAdapter adapter;
 
     public YourBookingsFragment(){
 
-        String response="";
-
         try {
-            //response = BackendUtilities.getAllBookings();
-            response = "";
-            JSONObject jObject = new JSONObject(response);
-            JSONArray jArray = jObject.getJSONArray("items");
-
-            for (int i=0; i < jArray.length(); i++)
-            {
-                try {
-                    JSONObject oneObject = jArray.getJSONObject(i);
-                    // Pulling items from the array
-                    String isbn = oneObject.getString("isbn");
-                    String until = oneObject.getString("until");
-                    String title = oneObject.getString("title");
-                    String author = oneObject.getString("author");
-                    String description = oneObject.getString("description");
-                    String thumbnail = oneObject.getString("thumbnail");
-
-                    int month = Integer.parseInt(until.split("-")[1]);
-                    int day = Integer.parseInt(until.split("-")[2]);
-                    int year = Integer.parseInt(until.split("-")[0]);
-
-                    Date aux = new Date(year-1900, month-1, day);
-
-                    String date = month + "/" + day + "/" + year;
-                    int diffDay = diffDate(date);
-
-                    //Log.e("daa","date: " +aux);
-                    //if(diffDay < 8)getExpBook(isbn,aux);
-
-                    if(diffDay >= 8) bookingList.add(new Booking(title, author, description, thumbnail ,aux , 0, isbn, ""));
-
-                } catch (JSONException e) {
-                    // Oops
+            final String[] result = {""};
+            Request request = BackendUtilities.getAllBookings();
+            (BackendUtilities.client).newCall((Request) request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
                 }
-            }
-        } catch (JSONException e) {
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    try (ResponseBody responseBody = response.body()) {
+                        if (!response.isSuccessful()) result[0] = null;
+
+                        result[0] = responseBody.string();
+                        JSONObject jObject = new JSONObject(result[0]);
+                        JSONArray jArray = jObject.getJSONArray("items");
+
+                        for (int i=0; i < jArray.length(); i++)
+                        {
+                            try {
+                                JSONObject oneObject = jArray.getJSONObject(i);
+                                // Pulling items from the array
+                                String isbn = oneObject.getString("isbn");
+                                String until = oneObject.getString("until");
+                                String title = oneObject.getString("title");
+                                String author = oneObject.getString("author");
+                                String description = oneObject.getString("description");
+                                String thumbnail = oneObject.getString("thumbnail");
+
+                                int month = Integer.parseInt(until.split("-")[1]);
+                                int day = Integer.parseInt(until.split("-")[2]);
+                                int year = Integer.parseInt(until.split("-")[0]);
+
+                                Date aux = new Date(year-1900, month-1, day);
+
+                                String date = month+1 + "/" + day + "/" + year;
+                                int diffDay = diffDate(date);
+
+                                if(diffDay >= 8){
+                                    bookingList.add(new Booking(title, author, description, thumbnail ,aux , 0, isbn, ""));
+
+                                }
+
+                            } catch (JSONException e) {
+                                // Oops
+                            }
+                        } getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
@@ -76,17 +103,11 @@ public class YourBookingsFragment extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.exp_bookings_fragment, container, false);
-
-        //Create the Person objects
-        //Booking book1 = new Booking("Harry Potter","J.K.Rowling", "descrizione matta", "immagine matta", new Date("03/03/2019"),0, "","");
-        //Booking book2 = new Booking("SuperLongMegaGigaTestBreaKTitle","author2", "descrizione matta", "immagine matta", new Date("05/06/2019"),0, "","");
 
         View lw = inflater.inflate(R.layout.your_bookings_fragment, container, false);
 
 
-        BookingListAdapter adapter = new BookingListAdapter(getActivity().getBaseContext(), R.layout.booking_view_layout, bookingList, "Fresh");
+        adapter = new BookingListAdapter(getActivity().getBaseContext(), R.layout.booking_view_layout, bookingList, "Fresh");
         setListAdapter(adapter);
 
 
@@ -94,6 +115,7 @@ public class YourBookingsFragment extends ListFragment {
         ListView mListView = lw.findViewById(android.R.id.list);
         mListView.setDividerHeight(0);
         mListView.setDivider(null);
+
 
         return lw;
     }
@@ -114,6 +136,9 @@ public class YourBookingsFragment extends ListFragment {
                 startActivity(intent);
             }
         });
+
+
+
     }
 
 

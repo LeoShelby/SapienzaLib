@@ -222,7 +222,7 @@ public class BackendUtilities {
 
     }
 
-    public static String getPopularBooks() throws InterruptedException{
+    public static Request getPopularBooks() throws InterruptedException{
         final String[] res = {""};
         Response response = null;
 
@@ -235,6 +235,8 @@ public class BackendUtilities {
                 .addHeader("access-token", JWT)
                 .build();
 
+        return request;
+        /*
         CountDownLatch countDownLatch = new CountDownLatch(1);
 
         client.newCall(request).enqueue(new Callback() {
@@ -256,6 +258,7 @@ public class BackendUtilities {
         });
         countDownLatch.await();
         return res[0];
+        */
 
     }
 
