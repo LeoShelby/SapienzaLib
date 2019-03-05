@@ -16,10 +16,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class PopBookingsFragment extends ListFragment {
 
@@ -28,42 +35,51 @@ public class PopBookingsFragment extends ListFragment {
 
     public PopBookingsFragment(){
 
-        String response="";
-
-
         try {
-            response = BackendUtilities.getPopularBooks();
-            JSONObject jObject = new JSONObject(response);
-            JSONArray jArray = jObject.getJSONArray("items");
-            for (int i=0; i < jArray.length(); i++)
-            {
-                try {
-                    JSONObject oneObject = jArray.getJSONObject(i);
-                    // Pulling items from the array
-                    String title = oneObject.getString("title");
-                    String authors = oneObject.getString("authors");
-                    String copies =  oneObject.getString("copies");
-                    String description =  oneObject.getString("description");
-                    String thumbnail =  oneObject.getString("thumbnail");
-                    String isbn =  oneObject.getString("isbn");
-
-                    if(copies.equals(""))copies = "0";
-
-                    bookingList.add(new Booking(title, authors, description,thumbnail, null, Integer.parseInt(copies),isbn,""));
-                } catch (JSONException e) {
-                    // Oops
+            final String[] result = {""};
+            Request request = BackendUtilities.getPopularBooks();
+            (BackendUtilities.client).newCall((Request) request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
                 }
-            }
 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    try (ResponseBody responseBody = response.body()) {
+                        if (!response.isSuccessful()) result[0] = null;
 
+                        result[0] = responseBody.string();
+                        JSONObject jObject = new JSONObject(result[0]);
+                        JSONArray jArray = jObject.getJSONArray("items");
+                        for (int i=0; i < jArray.length(); i++){
+                            try {
+                                JSONObject oneObject = jArray.getJSONObject(i);
+                                // Pulling items from the array
+                                String title = oneObject.getString("title");
+                                String authors = oneObject.getString("authors");
+                                String copies =  oneObject.getString("copies");
+                                String description =  oneObject.getString("description");
+                                String thumbnail =  oneObject.getString("thumbnail");
+                                String isbn =  oneObject.getString("isbn");
 
+                                if(copies.equals(""))copies = "0";
 
-        Log.e("leo","Response "+response);
+                                bookingList.add(new Booking(title, authors, description,thumbnail, null, Integer.parseInt(copies),isbn,""));
+
+                            } catch (JSONException e) {
+                                // Oops
+                                }
+                        } getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+                    } catch (JSONException e) {e.printStackTrace();}
+                }
+            });
+        } catch (InterruptedException e) { e.printStackTrace();}
+
     }
 
     @Override
