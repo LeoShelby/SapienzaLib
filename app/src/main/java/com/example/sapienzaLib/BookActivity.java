@@ -21,6 +21,7 @@ public class BookActivity extends BaseBaseActivity {
 
     String isbn;
     String date = "";
+    FloatingActionButton fbook,fwish;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +31,7 @@ public class BookActivity extends BaseBaseActivity {
 
 
         FloatingActionMenu fab = findViewById(R.id.fab);
-        FloatingActionButton fbook = findViewById(R.id.fabAddSubcategory);
+        fbook = findViewById(R.id.fabAddSubcategory);
         fbook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,7 +40,7 @@ public class BookActivity extends BaseBaseActivity {
                         .setAction("Action", null).show();
             }
         });
-        FloatingActionButton fwish = findViewById(R.id.fabAddProduct);
+        fwish = findViewById(R.id.fabAddProduct);
         fwish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,7 +62,12 @@ public class BookActivity extends BaseBaseActivity {
         String thumbnail = i.getStringExtra("thumbnail");
         isbn = i.getStringExtra("isbn");
         if(i.hasExtra("date")){
+            fwish.setVisibility(View.GONE);
+            fbook.setLabelText("Return");
             date = "Da restituire : " + i.getStringExtra("date");
+        }
+        if(i.hasExtra("wished")){
+            fwish.setLabelText("Unwish");
         }
 
         TextView tTitle = findViewById(R.id.book_title);

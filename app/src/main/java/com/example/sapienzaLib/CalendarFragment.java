@@ -1,6 +1,7 @@
 package com.example.sapienzaLib;
 
 
+import android.app.Activity;
 import android.app.usage.UsageEvents;
 import android.content.Context;
 import android.content.Intent;
@@ -133,6 +134,7 @@ public class CalendarFragment extends Fragment {
         try {
             final String[] result = {""};
             Request request = BackendUtilities.getAllBookings();
+            Activity context = getActivity();
             (BackendUtilities.client).newCall((Request) request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
@@ -142,7 +144,12 @@ public class CalendarFragment extends Fragment {
                 public void onResponse(Call call, Response response) throws IOException {
                     try (ResponseBody responseBody = response.body()) {
                         if (!response.isSuccessful()) result[0] = null;
-
+                        context.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ((TextView)context.findViewById(R.id.loading_text)).setVisibility(View.GONE);
+                            }
+                        });
                         result[0] = responseBody.string();
                         Log.d("valco", result[0]);
                         JSONObject jObject = new JSONObject(result[0]);

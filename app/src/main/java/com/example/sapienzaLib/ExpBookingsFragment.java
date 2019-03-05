@@ -36,7 +36,8 @@ public class ExpBookingsFragment extends ListFragment {
 
 
         try {
-            response = BackendUtilities.getAllBookings();
+            //response = BackendUtilities.getAllBookings();
+            response = "";
             JSONObject jObject = new JSONObject(response);
             JSONArray jArray = jObject.getJSONArray("items");
 
@@ -68,8 +69,6 @@ public class ExpBookingsFragment extends ListFragment {
                     // Oops
                 }
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }

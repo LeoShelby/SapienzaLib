@@ -29,6 +29,14 @@
         app:compactCalendarTextColor="#1D1A1A"
         app:compactCalendarTextSize="12sp" />
 
+    <TextView
+        android:id="@+id/loading_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Loading bookings..."
+        android:textAlignment="center"
+        android:textSize="18sp" />
+
     <ListView
         android:id="@+id/calendar_list"
         android:layout_width="match_parent"
