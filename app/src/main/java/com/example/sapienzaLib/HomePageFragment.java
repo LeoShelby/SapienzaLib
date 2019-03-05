@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,23 @@ public class HomePageFragment extends Fragment {
         TextView numRead = rootView.findViewById(R.id.num_home);
 
         numRead.setText("Libri letti questo mese: " + num);
+
+        String lastBook = "";
+
+        try {
+            String response = BackendUtilities.getLastBook();
+            JSONObject jObject = new JSONObject(response);
+            lastBook = jObject.getString("title");
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        TextView last = rootView.findViewById(R.id.last_home);
+        last.setText(lastBook);
+
 
         return rootView;
     }

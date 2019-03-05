@@ -311,4 +311,42 @@ public class BackendUtilities {
         return res[0];
     }
 
+    public static String getLastBook() throws InterruptedException{
+        final String[] res = {""};
+        Response response = null;
+
+        HttpUrl.Builder urlBuilder = HttpUrl.parse("https://sapienzalib.herokuapp.com/booking/last").newBuilder();
+
+        String url = urlBuilder.build().toString();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("access-token", JWT)
+                .build();
+
+        CountDownLatch countDownLatch = new CountDownLatch(1);
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                res[0] = null;
+                countDownLatch.countDown();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (!response.isSuccessful()) res[0] = null;
+
+                    res[0] = responseBody.string();
+                    Log.d("valco", res[0]);
+                    countDownLatch.countDown();
+                }
+            }
+        });
+        countDownLatch.await();
+        return res[0];
+
+    }
+
 }
