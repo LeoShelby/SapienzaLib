@@ -134,7 +134,7 @@ public class CalendarFragment extends Fragment {
         try {
             final String[] result = {""};
             Request request = BackendUtilities.getAllBookings();
-            Activity context = getActivity();
+            //Activity context = getActivity();
             (BackendUtilities.client).newCall((Request) request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
@@ -144,10 +144,12 @@ public class CalendarFragment extends Fragment {
                 public void onResponse(Call call, Response response) throws IOException {
                     try (ResponseBody responseBody = response.body()) {
                         if (!response.isSuccessful()) result[0] = null;
-                        context.runOnUiThread(new Runnable() {
+
+                        if( getActivity()!=null)
+                        getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                context.findViewById(R.id.loading_text).setVisibility(View.GONE);
+                                if(getActivity()!=null) getActivity().findViewById(R.id.loading_text).setVisibility(View.GONE);
                             }
                         });
                         result[0] = responseBody.string();

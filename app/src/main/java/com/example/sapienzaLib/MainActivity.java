@@ -142,6 +142,8 @@ public class MainActivity extends BaseBaseActivity
         if (id == R.id.nav_your_booking) {
 
         } else if (id == R.id.nav_wish_list) {
+            Intent intent = new Intent(this, WishedActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_add_book) {
             Intent intent = new Intent(this, AddBookActivity.class);

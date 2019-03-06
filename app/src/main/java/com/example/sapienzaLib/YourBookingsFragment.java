@@ -119,7 +119,7 @@ public class YourBookingsFragment extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //Log.e("QOO","CreateViewFRESH");
+        Log.e("QOO","CreateViewFRESH");
         View lw = inflater.inflate(R.layout.your_bookings_fragment, container, false);
 
 
@@ -138,7 +138,7 @@ public class YourBookingsFragment extends ListFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        //Log.e("QOO","CreatedFRESH");
+        Log.e("QOO","CreatedFRESH");
 
 
 
