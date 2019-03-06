@@ -1,5 +1,6 @@
 package com.example.sapienzaLib;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,7 +36,7 @@ public class PopBookingsFragment extends ListFragment {
     BookingListAdapter adapter;
 
     public PopBookingsFragment(){
-
+        //Log.e("QOO","New fragment pop");
         try {
             final String[] result = {""};
             Request request = BackendUtilities.getPopularBooks();
@@ -47,6 +49,18 @@ public class PopBookingsFragment extends ListFragment {
                 public void onResponse(Call call, Response response) throws IOException {
                     try (ResponseBody responseBody = response.body()) {
                         if (!response.isSuccessful()) result[0] = null;
+
+
+                        /*
+                        if(getActivity()!=null)
+                            getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ((TextView)getActivity().findViewById(R.id.loading_text_pop)).setVisibility(View.GONE);
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+                        */
 
                         result[0] = responseBody.string();
                         JSONObject jObject = new JSONObject(result[0]);
@@ -68,22 +82,24 @@ public class PopBookingsFragment extends ListFragment {
 
                             } catch (JSONException e) {
                                 // Oops
-                                }
-                        } getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                adapter.notifyDataSetChanged();
                             }
-                        });
+                        }if(getActivity()!=null)
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    adapter.notifyDataSetChanged();
+                                }
+                            });
                     } catch (JSONException e) {e.printStackTrace();}
                 }
             });
         } catch (InterruptedException e) { e.printStackTrace();}
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        //Log.e("QOO","createViewPOP");
 
         View lw = inflater.inflate(R.layout.pop_bookings_fragment, container, false);
 
@@ -104,6 +120,11 @@ public class PopBookingsFragment extends ListFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        //Log.e("QOO","viewCreatedPOP");
+
+
+
+
 
         ListView l = (ListView) getListView();
         l.setOnItemClickListener(new AdapterView.OnItemClickListener() {

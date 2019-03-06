@@ -1,5 +1,6 @@
 package com.example.sapienzaLib;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,7 +39,7 @@ public class YourBookingsFragment extends ListFragment {
     BookingListAdapter adapter;
 
     public YourBookingsFragment(){
-
+        Log.e("QOO","NEW FRESH");
         try {
             final String[] result = {""};
             Request request = BackendUtilities.getAllBookings();
@@ -50,6 +52,18 @@ public class YourBookingsFragment extends ListFragment {
                 public void onResponse(Call call, Response response) throws IOException {
                     try (ResponseBody responseBody = response.body()) {
                         if (!response.isSuccessful()) result[0] = null;
+
+
+                        /*
+                        if(getActivity()!=null)
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ((TextView)getActivity().findViewById(R.id.loading_text_fresh)).setVisibility(View.GONE);
+                                    adapter.notifyDataSetChanged();
+                                }
+                            });
+*/
 
                         result[0] = responseBody.string();
                         JSONObject jObject = new JSONObject(result[0]);
@@ -84,12 +98,14 @@ public class YourBookingsFragment extends ListFragment {
                             } catch (JSONException e) {
                                 // Oops
                             }
-                        } getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                adapter.notifyDataSetChanged();
-                            }
-                        });
+                        } if(getActivity()!=null)
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    adapter.notifyDataSetChanged();
+                                    //Log.e("po","porciod: "+bookingList.get(0));
+                                }
+                            });
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -103,7 +119,7 @@ public class YourBookingsFragment extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+        //Log.e("QOO","CreateViewFRESH");
         View lw = inflater.inflate(R.layout.your_bookings_fragment, container, false);
 
 
@@ -122,6 +138,9 @@ public class YourBookingsFragment extends ListFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        //Log.e("QOO","CreatedFRESH");
+
+
 
         ListView l = (ListView) getListView();
         l.setOnItemClickListener(new AdapterView.OnItemClickListener() {

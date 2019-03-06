@@ -32,6 +32,7 @@ public class HomeFragment extends Fragment {
         BookingsAdapter adapterTab = new BookingsAdapter(getChildFragmentManager());
         // Set the adapter onto the view pager
         viewPager.setAdapter(adapterTab);
+        //viewPager.setOffscreenPageLimit(2);
         // Give the TabLayout the ViewPager
         TabLayout tabLayout = getView().findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);

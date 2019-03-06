@@ -16,6 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -38,6 +39,8 @@ public class ExpBookingsFragment extends ListFragment {
     BookingListAdapter adapter;
 
     public ExpBookingsFragment(){
+        Log.e("QOO","NEW EXP");
+
         try {
             final String[] result = {""};
             Request request = BackendUtilities.getAllBookings();
@@ -50,6 +53,17 @@ public class ExpBookingsFragment extends ListFragment {
                 public void onResponse(Call call, Response response) throws IOException {
                     try (ResponseBody responseBody = response.body()) {
                         if (!response.isSuccessful()) result[0] = null;
+
+                        /*
+                        if(getActivity()!=null)
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ((TextView)getActivity().findViewById(R.id.loading_text_exp)).setVisibility(View.GONE);
+                                    adapter.notifyDataSetChanged();
+                                }
+                            });
+                              */
 
                         result[0] = responseBody.string();
                         JSONObject jObject = new JSONObject(result[0]);
@@ -83,12 +97,14 @@ public class ExpBookingsFragment extends ListFragment {
                             } catch (JSONException e) {
                                 // Oops
                             }
-                        } getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                adapter.notifyDataSetChanged();
-                            }
-                        });
+                        }if(getActivity()!=null)
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    adapter.notifyDataSetChanged();
+                                    //Log.e("po","AOOOO: "+bookingList.get(0));
+                                }
+                            });
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -103,7 +119,7 @@ public class ExpBookingsFragment extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+        //Log.e("QOO","createViewEXP");
         View lw = inflater.inflate(R.layout.exp_bookings_fragment, container, false);
 
 
@@ -120,6 +136,10 @@ public class ExpBookingsFragment extends ListFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        //Log.e("QOO","CREATEDEXP");
+
+
+
 
         ListView l = (ListView) getListView();
         l.setOnItemClickListener(new AdapterView.OnItemClickListener() {
