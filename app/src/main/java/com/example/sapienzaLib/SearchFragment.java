@@ -20,7 +20,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -69,6 +72,24 @@ public class SearchFragment extends Fragment {
                 intent.putExtra("description",selectedBook.getDescription());
                 intent.putExtra("thumbnail",selectedBook.getThumbnail());
                 intent.putExtra("isbn",selectedBook.getIsbn());
+                if(!selectedBook.getUntil().equals("")){
+
+                    String until = selectedBook.getUntil();
+                    SimpleDateFormat sdf = new SimpleDateFormat();
+                    sdf.applyPattern("dd MMMM yyyy");
+
+                    int month = Integer.parseInt(until.split("-")[1]);
+                    int day = Integer.parseInt(until.split("-")[2]);
+                    int year = Integer.parseInt(until.split("-")[0]);
+
+                    Calendar dd = Calendar.getInstance();
+                    dd.set(year,month,day,0,0);
+
+                    intent.putExtra("date",sdf.format(dd.getTime()));
+                }
+                if(!selectedBook.getWished().equals("true")){
+                    intent.putExtra("wished",selectedBook.getWished());
+                }
                 startActivity(intent);
 
             }
@@ -98,11 +119,13 @@ public class SearchFragment extends Fragment {
                             String thumb = oneObject.getString("thumbnail");
                             String auth = oneObject.getString("author");
                             String isbn = oneObject.getString("isbn");
+                            String until = oneObject.getString("date");
+                            String wished = oneObject.getString("wished");
 
                             if(desc.equals(""))
                                 desc = "Questo libro non possiede una descrizione";
 
-                            mBooks.add(new Book(title, auth, desc, thumb,isbn));
+                            mBooks.add(new Book(title, auth, desc, thumb,isbn, until, wished));
 
                         } catch (JSONException e) {
                             // Oops
