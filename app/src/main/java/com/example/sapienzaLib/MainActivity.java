@@ -139,9 +139,7 @@ public class MainActivity extends BaseBaseActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_your_booking) {
-
-        } else if (id == R.id.nav_wish_list) {
+         if (id == R.id.nav_wish_list) {
             Intent intent = new Intent(this, WishedActivity.class);
             startActivity(intent);
 

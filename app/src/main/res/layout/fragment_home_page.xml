@@ -42,12 +42,12 @@
                 android:textSize="30sp" />
 
             <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/quote"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_marginRight="2dp"
-                android:text='"Devo essere meglio di mille altre volte" - LeoDV'
+                android:text=""
                 android:textAlignment="textEnd"
                 android:textColor="#1F1F1F"
 

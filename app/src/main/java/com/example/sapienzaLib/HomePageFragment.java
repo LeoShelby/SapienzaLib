@@ -26,6 +26,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomePageFragment extends Fragment {
 
+    public String quote = "Chi non pensa a ora non pranza a tempu\n -Filippo";
+    public void setQuote(String quote){this.quote = quote;}
+
     ListView lw;
     CalendarListAdapter adapter;
     boolean more = false;
@@ -40,6 +43,11 @@ public class HomePageFragment extends Fragment {
         Date c = Calendar.getInstance().getTime();
         adapter = new CalendarListAdapter(getActivity(),bookings);
         lw.setAdapter(adapter);
+
+
+        TextView text = rootView.findViewById(R.id.quote);
+        text.setText(quote);
+
 
         CardView cw = rootView.findViewById(R.id.card_view_more);
         cw.setOnClickListener(new View.OnClickListener() {
