@@ -39,7 +39,7 @@ public class ExpBookingsFragment extends ListFragment {
     BookingListAdapter adapter;
 
     public ExpBookingsFragment(){
-        Log.e("QOO","NEW EXP");
+        //Log.e("QOO","NEW EXP");
 
         try {
             final String[] result = {""};
@@ -85,7 +85,7 @@ public class ExpBookingsFragment extends ListFragment {
                                 int day = Integer.parseInt(until.split("-")[2]);
                                 int year = Integer.parseInt(until.split("-")[0]);
 
-                                Date aux = new Date(year-1900, month-1, day);
+                                Date aux = new Date(year-1900, month, day);
 
                                 String date = month+1 + "/" + day + "/" + year;
                                 int diffDay = diffDate(date);
@@ -119,7 +119,7 @@ public class ExpBookingsFragment extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.e("QOO","createViewEXP");
+        //Log.e("QOO","createViewEXP");
         View lw = inflater.inflate(R.layout.exp_bookings_fragment, container, false);
 
 
@@ -136,7 +136,7 @@ public class ExpBookingsFragment extends ListFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Log.e("QOO","CREATEDEXP");
+        //Log.e("QOO","CREATEDEXP");
 
 
 

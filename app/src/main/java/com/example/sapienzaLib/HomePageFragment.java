@@ -32,8 +32,10 @@ import java.io.IOException;
 
 public class HomePageFragment extends Fragment {
 
-    public String quote = "Chi non pensa a ora non pranza a tempu\n -Filippo";
-    public void setQuote(String quote){this.quote = quote;}
+    public static String quote = "Chi non pensa a ora non pranza a tempu\n -Filippo";
+    public static void setQuote(String q){quote = q;}
+    public static TextView textQuote;
+
 
     String lastBook;
     int numLib;
@@ -43,16 +45,58 @@ public class HomePageFragment extends Fragment {
     ArrayList<Booking> bookings =  new ArrayList<>();
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View rootView = inflater.inflate(R.layout.fragment_home_page, container, false);
         lw = rootView.findViewById(R.id.list_homepage);
         Date c = Calendar.getInstance().getTime();
 
+        //NAME
+        TextView name = (TextView) rootView.findViewById(R.id.name_home);
+        String tmp = getActivity().getIntent().getStringExtra("user_name").split(" ")[0];
+        String output = tmp.substring(0, 1).toUpperCase() + tmp.substring(1);
+        name.setText("Ciao " + output);
 
+
+
+
+        //QUOTE
         TextView text = rootView.findViewById(R.id.quote);
-        text.setText(quote);
+        textQuote = text;
+        try{
+            final String[] result = {""};
+            Request request = BackendUtilities.getQuoteBack();
+            //Request request = null;
+            (BackendUtilities.client).newCall((Request) request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                }
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    try (ResponseBody responseBody = response.body()) {
+                        if (!response.isSuccessful()) result[0] = null;
+                        result[0] = responseBody.string();
+                        //Log.e("mm","AO: "+result[0]);
+                        setQuote(result[0]);
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                text.setText(quote);
+                            }
+                        });
+                    }
+                }
+            });
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
+
+
+
+        //WISHED BOOKS
+
+        TextView wishNum = (TextView) rootView.findViewById(R.id.wish_num);
 
         CardView cw = rootView.findViewById(R.id.card_view_more);
         cw.setOnClickListener(new View.OnClickListener() {
@@ -86,7 +130,8 @@ public class HomePageFragment extends Fragment {
                         result[0] = responseBody.string();
                         JSONObject jObject = new JSONObject(result[0]);
                         JSONArray jArray = jObject.getJSONArray("items");
-                        System.out.println("len"+jArray.length());
+                        //System.out.println("len"+jArray.length());
+
                         for (int i=0; i < jArray.length(); i++)
                         {
                             try {
@@ -111,6 +156,7 @@ public class HomePageFragment extends Fragment {
                             @Override
                             public void run() {
                                 lw.setAdapter(adapter);
+                                wishNum.setText("Wished books available: "+jArray.length());
                             }
                         });
 
@@ -122,6 +168,9 @@ public class HomePageFragment extends Fragment {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+
+        //NUMBER OF BOOKS
         try{
             final String[] result = {""};
             Request request = BackendUtilities.getAllBookings();
@@ -153,6 +202,10 @@ public class HomePageFragment extends Fragment {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+
+
+        //LAST BOOK
         try{
             final String[] result = {""};
             Request request = BackendUtilities.getLastBook2();
@@ -189,6 +242,8 @@ public class HomePageFragment extends Fragment {
 
         CircleImageView cim = rootView.findViewById(R.id.image_home);
         Picasso.with(getActivity()).load(getActivity().getIntent().getStringExtra("user_pic")).fit().into(cim);
+
+
         //rootView.findViewById(R.id.card).setBackgroundResource(R.drawable.side_nav_bar);
 
 
@@ -197,5 +252,7 @@ public class HomePageFragment extends Fragment {
 
         return rootView;
     }
+
+
 
 }

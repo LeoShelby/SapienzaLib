@@ -39,7 +39,7 @@ public class PopBookingsFragment extends ListFragment {
     BookingListAdapter adapter;
 
     public PopBookingsFragment(){
-        Log.e("QOO","New fragment pop");
+        //Log.e("QOO","New fragment pop");
         try {
             final String[] result = {""};
             Request request = BackendUtilities.getPopularBooks();
@@ -101,7 +101,7 @@ public class PopBookingsFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        Log.e("QOO","createViewPOP");
+        //Log.e("QOO","createViewPOP");
 
         View lw = inflater.inflate(R.layout.pop_bookings_fragment, container, false);
 
@@ -122,7 +122,7 @@ public class PopBookingsFragment extends ListFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Log.e("QOO","viewCreatedPOP");
+        //Log.e("QOO","viewCreatedPOP");
 
 
 

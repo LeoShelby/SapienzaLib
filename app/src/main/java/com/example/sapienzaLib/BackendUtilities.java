@@ -143,6 +143,7 @@ public class BackendUtilities {
             public void onResponse(Call call, Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     String jwt = responseBody.string();
+                    Log.e("aoo","jw: "+jwt);
                     JWT = jwt;
                     GregorianCalendar gc = new GregorianCalendar();
                     gc.add(Calendar.DATE, 1);
@@ -359,6 +360,54 @@ public class BackendUtilities {
                 try (ResponseBody responseBody = response.body()) {
 
                     Log.d(TAG, responseBody.string()    );
+                }
+            }
+        });
+    }
+
+    public static Request getQuoteBack() throws InterruptedException{
+        final String[] res = {""};
+        Response response = null;
+
+        HttpUrl.Builder urlBuilder = HttpUrl.parse("https://sapienzalib.herokuapp.com/quote").newBuilder();
+
+        String url = urlBuilder.build().toString();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("access-token", JWT)
+                .build();
+
+        return request;
+
+    }
+
+    public static void postQuote(String q) throws InterruptedException {
+        final String[] res = {""};
+        Response response = null;
+
+        RequestBody requestBody = new FormBody.Builder()
+                .add("quote", q)
+                .build();
+
+        HttpUrl.Builder urlBuilder = HttpUrl.parse("https://sapienzalib.herokuapp.com/quote").newBuilder();
+        String url = urlBuilder.build().toString();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("access-token", JWT)
+                .post(requestBody)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
                 }
             }
         });

@@ -148,6 +148,8 @@ public class MainActivity extends BaseBaseActivity
             startActivity(intent);
 
         } else if (id == R.id.nav_manage) {
+             Intent intent = new Intent(this, ChangeQuoteActivity.class);
+             startActivity(intent);
 
         } else if (id == R.id.nav_info) {
             Intent intent = new Intent(this, InfoActivity.class);
@@ -202,5 +204,7 @@ public class MainActivity extends BaseBaseActivity
         t.replace(R.id.fragment, f);
         t.commit();
     }
+
+
 
 }

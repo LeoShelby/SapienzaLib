@@ -1,12 +1,17 @@
 package com.example.sapienzaLib;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -100,5 +105,19 @@ public class WishedActivity extends AppCompatActivity {
         } catch (InterruptedException e) { e.printStackTrace();}
 
 
+
+        //ListView l = (ListView) getListView();
+        ((BookListAdapter)mAdapter).setOnItemClickListener(new BookListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(getBaseContext(), BookActivity.class);
+                intent.putExtra("title",mBooks.get(position).getTitle());
+                intent.putExtra("author",mBooks.get(position).getAuthor());
+                intent.putExtra("description",mBooks.get(position).getDescription());
+                intent.putExtra("thumbnail",mBooks.get(position).getThumbnail());
+                intent.putExtra("isbn",mBooks.get(position).getIsbn());
+                startActivity(intent);
+            }
+        });
     }
 }
