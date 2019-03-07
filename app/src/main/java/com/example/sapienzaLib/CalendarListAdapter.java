@@ -55,4 +55,7 @@ public class CalendarListAdapter extends BaseAdapter {
         textViewDate.setText(sdf.format(bookings.get(position).getDate()));
         return itemView;
     }
+    /*public void setBookings(ArrayList<Booking> bookings){
+        this.bookings=bookings;
+    }*/
 }

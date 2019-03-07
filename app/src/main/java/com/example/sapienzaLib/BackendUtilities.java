@@ -200,6 +200,41 @@ public class BackendUtilities {
 
     }
 
+    public static Request getAllWishes() throws InterruptedException{
+        final String[] res = {""};
+        Response response = null;
+
+        HttpUrl.Builder urlBuilder = HttpUrl.parse("https://sapienzalib.herokuapp.com/availablewish").newBuilder();
+
+        String url = urlBuilder.build().toString();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("access-token", JWT)
+                .build();
+
+        return request;
+
+    }
+
+    public static Request getLastBook2() throws InterruptedException{
+        final String[] res = {""};
+        Response response = null;
+
+        HttpUrl.Builder urlBuilder = HttpUrl.parse("https://sapienzalib.herokuapp.com/booking/last").newBuilder();
+
+        String url = urlBuilder.build().toString();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("access-token", JWT)
+                .build();
+
+        return request;
+
+    }
+
+
     public static Request getWished() throws InterruptedException{
         final String[] res = {""};
         Response response = null;
