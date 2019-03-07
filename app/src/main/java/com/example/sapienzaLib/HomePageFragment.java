@@ -86,7 +86,7 @@ public class HomePageFragment extends Fragment {
                         result[0] = responseBody.string();
                         JSONObject jObject = new JSONObject(result[0]);
                         JSONArray jArray = jObject.getJSONArray("items");
-                        System.out.println("len"+jArray.length());
+
                         for (int i=0; i < jArray.length(); i++)
                         {
                             try {
@@ -110,6 +110,7 @@ public class HomePageFragment extends Fragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                ((TextView)getActivity().findViewById(R.id.textView7)).setText("Wished books available "+jArray.length());
                                 lw.setAdapter(adapter);
                             }
                         });
