@@ -143,7 +143,6 @@ public class BackendUtilities {
             public void onResponse(Call call, Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     String jwt = responseBody.string();
-                    Log.e("aoo","jw: "+jwt);
                     JWT = jwt;
                     GregorianCalendar gc = new GregorianCalendar();
                     gc.add(Calendar.DATE, 1);
