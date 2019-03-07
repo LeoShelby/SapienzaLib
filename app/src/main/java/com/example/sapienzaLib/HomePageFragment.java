@@ -31,6 +31,10 @@ import okhttp3.ResponseBody;
 import java.io.IOException;
 
 public class HomePageFragment extends Fragment {
+
+    public String quote = "Chi non pensa a ora non pranza a tempu\n -Filippo";
+    public void setQuote(String quote){this.quote = quote;}
+
     String lastBook;
     int numLib;
     ListView lw;
@@ -44,6 +48,11 @@ public class HomePageFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_home_page, container, false);
         lw = rootView.findViewById(R.id.list_homepage);
         Date c = Calendar.getInstance().getTime();
+
+
+        TextView text = rootView.findViewById(R.id.quote);
+        text.setText(quote);
+
 
         CardView cw = rootView.findViewById(R.id.card_view_more);
         cw.setOnClickListener(new View.OnClickListener() {
