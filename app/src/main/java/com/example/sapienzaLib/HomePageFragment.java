@@ -78,7 +78,7 @@ public class HomePageFragment extends Fragment {
                         result[0] = responseBody.string();
                         //Log.e("mm","AO: "+result[0]);
                         setQuote(result[0]);
-                        getActivity().runOnUiThread(new Runnable() {
+                        if(getActivity()!=null)getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 text.setText(quote);
@@ -151,8 +151,8 @@ public class HomePageFragment extends Fragment {
                             }
 
                         }
-                        adapter = new CalendarListAdapter(getActivity(),bookings);
-                        getActivity().runOnUiThread(new Runnable() {
+                        if(getActivity()!=null)adapter = new CalendarListAdapter(getActivity(),bookings);
+                        if(getActivity()!=null)getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 lw.setAdapter(adapter);
@@ -187,7 +187,7 @@ public class HomePageFragment extends Fragment {
                         JSONArray jArray = jObject.getJSONArray("items");
                         numLib = jArray.length();
                         TextView numRead = rootView.findViewById(R.id.num_home);
-                        getActivity().runOnUiThread(new Runnable() {
+                        if(getActivity()!=null)getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 numRead.setText("Libri letti: " + numLib);
@@ -221,7 +221,7 @@ public class HomePageFragment extends Fragment {
                         JSONObject jObject = new JSONObject(result[0]);
                         lastBook = jObject.getString("title");
                         TextView last = rootView.findViewById(R.id.last_home);
-                        getActivity().runOnUiThread(new Runnable() {
+                        if(getActivity()!=null)getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 last.setText(lastBook);
