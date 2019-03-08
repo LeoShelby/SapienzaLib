@@ -83,9 +83,7 @@ public class ChangeQuoteActivity extends AppCompatActivity {
                         popupWindow.dismiss();
                     }
                 });
-
                 */
-
             }
         });
     }
