@@ -81,11 +81,12 @@ public class WishedActivity extends AppCompatActivity {
                                 String description =  oneObject.getString("description");
                                 String thumbnail =  oneObject.getString("thumbnail");
                                 String isbn =  oneObject.getString("isbn");
+                                String until =  oneObject.getString("until");
 
                                 //if(copies.equals(""))copies = "0";
 
                                 Log.e("k","aaa: "+ result[0]);
-                                mBooks.add(new Book(title, authors, description, thumbnail,isbn, "", "true"));
+                                mBooks.add(new Book(title, authors, description, thumbnail,isbn, until, "true"));
 
                             } catch (JSONException e) {
                                 // Oops
@@ -116,6 +117,10 @@ public class WishedActivity extends AppCompatActivity {
                 intent.putExtra("description",mBooks.get(position).getDescription());
                 intent.putExtra("thumbnail",mBooks.get(position).getThumbnail());
                 intent.putExtra("isbn",mBooks.get(position).getIsbn());
+                intent.putExtra("wished","true");
+                if(!mBooks.get(position).getUntil().equals("")){
+                    intent.putExtra("until",mBooks.get(position).getUntil());
+                }
                 startActivity(intent);
             }
         });
