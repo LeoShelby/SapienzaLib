@@ -87,7 +87,7 @@ public class SearchFragment extends Fragment {
 
                     intent.putExtra("date",sdf.format(dd.getTime()));
                 }
-                if(!selectedBook.getWished().equals("true")){
+                if(selectedBook.getWished().equals("true")){
                     intent.putExtra("wished",selectedBook.getWished());
                 }
                 startActivity(intent);

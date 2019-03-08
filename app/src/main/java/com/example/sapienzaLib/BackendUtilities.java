@@ -42,6 +42,7 @@ public class BackendUtilities {
 
     static String TAG = "GoogleVerify";
     static String JWT = "";
+    static int role = 0;
     static GregorianCalendar EXPIREDATE;
     static OkHttpClient client = new OkHttpClient();
 

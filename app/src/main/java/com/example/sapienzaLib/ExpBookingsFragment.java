@@ -40,7 +40,6 @@ public class ExpBookingsFragment extends ListFragment {
 
     public ExpBookingsFragment(){
         //Log.e("QOO","NEW EXP");
-
         try {
             final String[] result = {""};
             Request request = BackendUtilities.getAllBookings();
@@ -86,7 +85,6 @@ public class ExpBookingsFragment extends ListFragment {
                                 int year = Integer.parseInt(until.split("-")[0]);
 
                                 Date aux = new Date(year-1900, month, day);
-
                                 String date = month+1 + "/" + day + "/" + year;
                                 int diffDay = diffDate(date);
 

@@ -96,6 +96,7 @@ public class BookActivity extends BaseBaseActivity {
             booked = false;
         }
         if(i.hasExtra("wished")){
+            Log.d("valco", "set a Remove");
             fwish.setLabelText("Remove from wishlist");
             wished=true;
         }

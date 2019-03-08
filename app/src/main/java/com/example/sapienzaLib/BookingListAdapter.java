@@ -52,7 +52,7 @@ public class BookingListAdapter extends ArrayAdapter<Booking> {
         tvAuthor.setText(author);
 
         String s = "";
-        if(date!=null) s = new SimpleDateFormat("MM-dd-YYYY").format(date);
+        if(date!=null) s = new SimpleDateFormat("dd MMMM").format(date);
 
         if(this.type_booking.equals("Fresh")){
             tvDate.setText("Expiring on: "+s);
