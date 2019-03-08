@@ -91,6 +91,7 @@ public class BookActivity extends BaseBaseActivity {
             fbook.setLabelText("Return");
             fbook.setImageResource(R.drawable.ic_minus_white);
             booked = true;
+            Log.d("valco",dater + "---" + date);
         }
         else{
             booked = false;

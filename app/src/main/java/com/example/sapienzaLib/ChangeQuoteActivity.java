@@ -61,6 +61,8 @@ public class ChangeQuoteActivity extends AppCompatActivity {
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
 
+                /*
+
                 LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                 View popupView = inflater.inflate(R.layout.popup_window, null);
 
@@ -81,6 +83,8 @@ public class ChangeQuoteActivity extends AppCompatActivity {
                         popupWindow.dismiss();
                     }
                 });
+
+                */
 
             }
         });

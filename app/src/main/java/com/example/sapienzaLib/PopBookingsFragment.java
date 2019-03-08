@@ -1,16 +1,11 @@
 package com.example.sapienzaLib;
 
-import android.app.Activity;
-import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.internal.BottomNavigationItemView;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -22,10 +17,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -37,8 +30,11 @@ public class PopBookingsFragment extends ListFragment {
 
     ArrayList<Booking> bookingList = new ArrayList<>();
     BookingListAdapter adapter;
+    SimpleDateFormat sdf = new SimpleDateFormat(); // creo l'oggetto
 
     public PopBookingsFragment(){
+
+        sdf.applyPattern("MMMM yyyy");
         //Log.e("QOO","New fragment pop");
         try {
             final String[] result = {""};
@@ -77,10 +73,13 @@ public class PopBookingsFragment extends ListFragment {
                                 String description =  oneObject.getString("description");
                                 String thumbnail =  oneObject.getString("thumbnail");
                                 String isbn =  oneObject.getString("isbn");
+                                //String wished = oneObject.getString("wished");
+                                String wished = "false";
+
 
                                 if(copies.equals(""))copies = "0";
 
-                                bookingList.add(new Booking(title, authors, description,thumbnail, null, Integer.parseInt(copies),isbn,""));
+                                bookingList.add(new Booking(title, authors, description,thumbnail, null, Integer.parseInt(copies),isbn,"", wished));
 
                             } catch (JSONException e) {
                                 // Oops
@@ -138,6 +137,9 @@ public class PopBookingsFragment extends ListFragment {
                 intent.putExtra("description",bookingList.get(position).getDescription());
                 intent.putExtra("thumbnail",bookingList.get(position).getThumbnail());
                 intent.putExtra("isbn",bookingList.get(position).getIsbn());
+                if(bookingList.get(position).getWished().equals("true")){
+                    intent.putExtra("wished", "true");
+                }
                 startActivity(intent);
             }
         });

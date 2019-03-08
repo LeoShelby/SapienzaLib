@@ -122,6 +122,10 @@ public class CalendarFragment extends Fragment {
                 intent.putExtra("thumbnail",b.getThumbnail());
                 intent.putExtra("isbn",b.getIsbn());
                 intent.putExtra("date",sdff.format(b.getDate()));
+                intent.putExtra("until", b.getUntil());
+                if(b.getWished().equals("true")){
+                    intent.putExtra("wished", "true");
+                }
                 startActivity(intent);
             }
         });
@@ -171,6 +175,7 @@ public class CalendarFragment extends Fragment {
                                 String desc = oneObject.getString("description");
                                 String thumb = oneObject.getString("thumbnail");
                                 String auth = oneObject.getString("author");
+                                String wished = oneObject.getString("wished");
                                 String gid = oneObject.getString("gid");
 
 
@@ -181,7 +186,7 @@ public class CalendarFragment extends Fragment {
                                 Calendar dd = Calendar.getInstance();
                                 dd.set(year,month,day,0,0);
 
-                                Booking booking = new Booking(title,auth,desc,thumb,null,0,isbn,until);
+                                Booking booking = new Booking(title,auth,desc,thumb,null,0,isbn,until, wished);
                                 if(bookList.get(until) == null){
                                     bookList.put(until, new ArrayList<>());
                                 }

@@ -15,16 +15,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
-import android.widget.TextView;
-
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -37,9 +33,13 @@ public class ExpBookingsFragment extends ListFragment {
 
     ArrayList<Booking> bookingList = new ArrayList<>();
     BookingListAdapter adapter;
+    SimpleDateFormat sdf = new SimpleDateFormat(); // creo l'oggetto
+
 
     public ExpBookingsFragment(){
         //Log.e("QOO","NEW EXP");
+        sdf.applyPattern("dd MMMM");
+
         try {
             final String[] result = {""};
             Request request = BackendUtilities.getAllBookings();
@@ -79,6 +79,8 @@ public class ExpBookingsFragment extends ListFragment {
                                 String author = oneObject.getString("author");
                                 String description = oneObject.getString("description");
                                 String thumbnail = oneObject.getString("thumbnail");
+                                String wished = oneObject.getString("wished");
+
 
                                 int month = Integer.parseInt(until.split("-")[1]);
                                 int day = Integer.parseInt(until.split("-")[2]);
@@ -89,7 +91,7 @@ public class ExpBookingsFragment extends ListFragment {
                                 int diffDay = diffDate(date);
 
                                 if(diffDay < 8){
-                                    bookingList.add(new Booking(title, author, description, thumbnail ,aux , 0, isbn, ""));
+                                    bookingList.add(new Booking(title, author, description, thumbnail ,aux , 0, isbn, "", wished));
                                 }
 
                             } catch (JSONException e) {
@@ -148,6 +150,10 @@ public class ExpBookingsFragment extends ListFragment {
                 intent.putExtra("description",bookingList.get(position).getDescription());
                 intent.putExtra("thumbnail",bookingList.get(position).getThumbnail());
                 intent.putExtra("isbn",bookingList.get(position).getIsbn());
+                if(bookingList.get(position).getWished().equals("true")){
+                    intent.putExtra("wished", "true");
+                }
+                intent.putExtra("date", sdf.format(bookingList.get(position).getDate()));
                 startActivity(intent);
             }
         });

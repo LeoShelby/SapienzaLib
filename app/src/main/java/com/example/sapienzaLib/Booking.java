@@ -1,9 +1,9 @@
 package com.example.sapienzaLib;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Booking {
+    private String wished;
     private String title;
     private String author;
     private String description;
@@ -13,7 +13,7 @@ public class Booking {
     private String isbn;
     private String until;
 
-    public Booking(String title, String author, String description, String thumbnail, Date date, int copies, String isbn, String until) {
+    public Booking(String title, String author, String description, String thumbnail, Date date, int copies, String isbn, String until, String wished) {
         this.title = title;
         this.author = author;
         this.description = description;
@@ -22,6 +22,15 @@ public class Booking {
         this.copies = copies;
         this.isbn = isbn;
         this.until = until;
+        this.wished = wished;
+    }
+
+    public String getWished() {
+        return wished;
+    }
+
+    public void setWished(String wished) {
+        this.wished = wished;
     }
 
     public String getUntil() {

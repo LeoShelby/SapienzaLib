@@ -119,7 +119,7 @@ public class WishedActivity extends AppCompatActivity {
                 intent.putExtra("isbn",mBooks.get(position).getIsbn());
                 intent.putExtra("wished","true");
                 if(!mBooks.get(position).getUntil().equals("")){
-                    intent.putExtra("until",mBooks.get(position).getUntil());
+                    intent.putExtra("date",mBooks.get(position).getUntil());
                 }
                 startActivity(intent);
             }

@@ -1,11 +1,8 @@
 package com.example.sapienzaLib;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -142,8 +139,10 @@ public class HomePageFragment extends Fragment {
                                 String author = oneObject.getString("author");
                                 String description = oneObject.getString("description");
                                 String thumbnail = oneObject.getString("thumbnail");
+                                String wished = oneObject.getString("wished");
+
                                 Date c = Calendar.getInstance().getTime();
-                                bookings.add(new Booking(title, author, description, thumbnail ,c , 0, isbn, ""));
+                                bookings.add(new Booking(title, author, description, thumbnail ,c , 0, isbn, "", wished));
 
 
                             } catch (JSONException e) {

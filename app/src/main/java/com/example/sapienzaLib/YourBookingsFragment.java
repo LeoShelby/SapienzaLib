@@ -1,11 +1,9 @@
 package com.example.sapienzaLib;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,9 +34,12 @@ public class YourBookingsFragment extends ListFragment {
 
     ArrayList<Booking> bookingList = new ArrayList<>();
     BookingListAdapter adapter;
+    SimpleDateFormat sdf = new SimpleDateFormat(); // creo l'oggetto
 
     public YourBookingsFragment(){
         //Log.e("QOO","NEW FRESH");
+        sdf.applyPattern("dd MMMM");
+
         try {
             final String[] result = {""};
             Request request = BackendUtilities.getAllBookings();
@@ -80,6 +80,7 @@ public class YourBookingsFragment extends ListFragment {
                                 String author = oneObject.getString("author");
                                 String description = oneObject.getString("description");
                                 String thumbnail = oneObject.getString("thumbnail");
+                                String wished = oneObject.getString("wished");
 
                                 int month = Integer.parseInt(until.split("-")[1]);
                                 int day = Integer.parseInt(until.split("-")[2]);
@@ -91,7 +92,7 @@ public class YourBookingsFragment extends ListFragment {
                                 int diffDay = diffDate(date);
 
                                 if(diffDay >= 8){
-                                    bookingList.add(new Booking(title, author, description, thumbnail ,aux , 0, isbn, ""));
+                                    bookingList.add(new Booking(title, author, description, thumbnail ,aux , 0, isbn, "", wished));
 
                                 }
 
@@ -152,6 +153,11 @@ public class YourBookingsFragment extends ListFragment {
                 intent.putExtra("description",bookingList.get(position).getDescription());
                 intent.putExtra("thumbnail",bookingList.get(position).getThumbnail());
                 intent.putExtra("isbn",bookingList.get(position).getIsbn());
+                intent.putExtra("date", sdf.format(bookingList.get(position).getDate()));
+                if(bookingList.get(position).getWished().equals("true")){
+                    intent.putExtra("wished", "true");
+                }
+                Log.d("valco",sdf.format(bookingList.get(position).getDate()));
                 startActivity(intent);
             }
         });
