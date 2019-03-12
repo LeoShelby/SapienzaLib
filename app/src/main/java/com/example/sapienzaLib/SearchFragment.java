@@ -36,6 +36,22 @@ public class SearchFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
+    public RecyclerView getLw() {
+        return lw;
+    }
+
+    public void setLw(RecyclerView lw) {
+        this.lw = lw;
+    }
+
+    public RecyclerView.Adapter getmAdapter() {
+        return mAdapter;
+    }
+
+    public void setmAdapter(RecyclerView.Adapter mAdapter) {
+        this.mAdapter = mAdapter;
+    }
+
     public SearchFragment() {
         // Required empty public constructor
     }

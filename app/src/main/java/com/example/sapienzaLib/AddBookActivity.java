@@ -1,12 +1,14 @@
 package com.example.sapienzaLib;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -51,6 +53,15 @@ public class AddBookActivity extends BaseBaseActivity implements OnScanListener 
                 layout = (FrameLayout) findViewById(R.id.add_frame);
                 layout.removeAllViewsInLayout();
                 layout.addView(picker);
+            }
+        });
+
+        Button mButton = findViewById(R.id.button2);
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getBaseContext(), SearchBookActivity.class);
+                startActivity(i);
             }
         });
 

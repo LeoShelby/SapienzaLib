@@ -42,7 +42,7 @@ public class BackendUtilities {
 
     static String TAG = "GoogleVerify";
     static String JWT = "";
-    static int role = 0;
+    static int role = 1;
     static GregorianCalendar EXPIREDATE;
     static OkHttpClient client = new OkHttpClient();
 
@@ -235,7 +235,6 @@ public class BackendUtilities {
 
     }
 
-
     public static Request getWished() throws InterruptedException{
         final String[] res = {""};
         Response response = null;
@@ -411,5 +410,22 @@ public class BackendUtilities {
                 }
             }
         });
+    }
+
+    public static Request getBooksOnGoogle(String q) throws InterruptedException{
+        final String[] res = {""};
+        Response response = null;
+
+        HttpUrl.Builder urlBuilder = HttpUrl.parse("https://sapienzalib.herokuapp.com/googlebooks").newBuilder();
+        urlBuilder.addQueryParameter("q",q);
+        String url = urlBuilder.build().toString();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("access-token", JWT)
+                .build();
+
+        return request;
+
     }
 }

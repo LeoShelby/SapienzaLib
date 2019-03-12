@@ -18,6 +18,10 @@ import java.util.List;
 
 public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.ViewHolder> {
 
+    public List<Book> getmBooks() {
+        return mBooks;
+    }
+
     // Store a member variable for the contacts
     private List<Book> mBooks;
     private Activity activity;

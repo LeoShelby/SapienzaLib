@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ChangeQuoteActivity"></activity>
+        <activity android:name=".SearchBookActivity"></activity>
+        <activity android:name=".ChangeQuoteActivity" />
         <activity android:name=".WishedActivity" />
         <activity
             android:name=".InfoActivity"
