@@ -64,7 +64,8 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.ViewHo
         myViewHolder.titleTextView.setText(book.getTitle());
         myViewHolder.authorTextView.setText(book.getAuthor());
         myViewHolder.descriptionTextView.setText(book.getDescription());
-        Picasso.with(activity).load(book.getThumbnail()).fit().into(myViewHolder.thumbnailImageView);
+        if(!book.getThumbnail().equals(""))
+            Picasso.with(activity).load(book.getThumbnail()).fit().into(myViewHolder.thumbnailImageView);
 
     }
 
