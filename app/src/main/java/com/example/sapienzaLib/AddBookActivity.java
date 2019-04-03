@@ -84,12 +84,13 @@ public class AddBookActivity extends BaseBaseActivity implements OnScanListener 
         List<Barcode> bc = scanSession.getNewlyRecognizedCodes();
         try {
             BackendUtilities.postBookByISBN(bc.get(0).getData());
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         scanSession.stopScanning();
-        Snackbar.make(layout, "Hai aggiunto stocazzo de libro", Snackbar.LENGTH_INDEFINITE)
-                .setAction("Click to close", new View.OnClickListener() {
+        Snackbar.make(layout, "Booked added", Snackbar.LENGTH_INDEFINITE)
+                .setAction("Go back to the homepage", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         finish();

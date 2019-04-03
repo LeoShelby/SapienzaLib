@@ -89,7 +89,7 @@
                 android:id="@+id/description_book_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Descrizione"
+                android:text="Description"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -112,10 +112,71 @@
                 android:id="@+id/buy_book_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Compralo"
+                android:text="Purchasing options"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:visibility="gone"
+                app:cardCornerRadius="7dp"
+                app:cardElevation="5dp"
+                app:cardPreventCornerOverlap="false"
+                app:contentPadding="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_weight="33.3"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="left"
+                            android:text="Amount"
+                            android:textColor="#03396c"
+                            android:textSize="19sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textView3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/textView2"
+                            android:paddingTop="10dp"
+                            android:text="Buy on Google Play"
+                            android:textSize="13dp" />
+
+                        <TextView
+                            android:id="@+id/textView1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_weight="66.6"
+                            android:paddingTop="10dp"
+                            android:textAlignment="textEnd"
+                            android:textStyle="italic" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
         </LinearLayout>
+
     </ScrollView>
 </LinearLayout>

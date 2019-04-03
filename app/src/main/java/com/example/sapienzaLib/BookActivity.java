@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -15,7 +16,19 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.w3c.dom.Text;
+
+import java.io.IOException;
 import java.util.Date;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class BookActivity extends BaseBaseActivity {
 
@@ -116,6 +129,60 @@ public class BookActivity extends BaseBaseActivity {
         tAuthor.setText(author);
         tDescription.setText(description);
         Picasso.with(this).load(thumbnail).fit().into(tThumbnail);
+
+        try {
+            Request r = BackendUtilities.getBookInfo(isbn);
+            (BackendUtilities.client).newCall((Request) r).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    try (ResponseBody responseBody = response.body()) {
+                        if (response.isSuccessful()){
+                            String s = responseBody.string();
+
+                            Log.d("valco", "laccidi");
+                            JSONObject jObject = new JSONObject(s);
+                            String amount = jObject.getString("amount");
+                            String buyLink = jObject.getString("link");
+
+                            Log.d("valco", amount);
+
+                            if(!amount.equals("-1")) {
+
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        CardView cv = findViewById(R.id.card_view);
+                                        cv.setVisibility(View.VISIBLE);
+                                        cv.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                Uri uri = Uri.parse(buyLink); // missing 'http://' will cause crashed
+                                                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                                                startActivity(intent);
+                                            }
+                                        });
+                                        ((TextView) findViewById(R.id.textView2)).setText(amount);
+
+                                    }
+                                });
+                            }
+                            else{
+                                Log.d("valco","ciao");
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 

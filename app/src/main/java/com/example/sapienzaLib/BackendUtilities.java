@@ -428,4 +428,20 @@ public class BackendUtilities {
         return request;
 
     }
+
+    public static Request getBookInfo(String q) throws InterruptedException{
+        final String[] res = {""};
+        Response response = null;
+
+        HttpUrl.Builder urlBuilder = HttpUrl.parse("https://sapienzalib.herokuapp.com/salesInfo/"+q).newBuilder();
+        String url = urlBuilder.build().toString();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("access-token", JWT)
+                .build();
+
+        return request;
+
+    }
 }
