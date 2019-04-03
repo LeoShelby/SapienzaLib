@@ -124,7 +124,7 @@ public class SearchFragment extends Fragment {
                     String response = BackendUtilities.getBookByQuery(currentQuery);
                     JSONObject jObject = new JSONObject(response);
                     JSONArray jArray = jObject.getJSONArray("items");
-                    Log.d("valco", response);
+                    Log.d("valco", jArray.length() + "");
                     for (int i=0; i < jArray.length(); i++)
                     {
                         try {

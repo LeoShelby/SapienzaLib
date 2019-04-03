@@ -157,6 +157,8 @@ public class BookActivity extends BaseBaseActivity {
                                     @Override
                                     public void run() {
                                         CardView cv = findViewById(R.id.card_view);
+                                        TextView tv = findViewById(R.id.purchase_label);
+                                        tv.setVisibility(View.GONE);
                                         cv.setVisibility(View.VISIBLE);
                                         cv.setOnClickListener(new View.OnClickListener() {
                                             @Override

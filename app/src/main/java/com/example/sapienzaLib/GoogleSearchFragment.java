@@ -4,6 +4,7 @@ package com.example.sapienzaLib;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -70,6 +71,7 @@ public class GoogleSearchFragment extends SearchFragment {
                                 // TODO
                                 try {
                                     BackendUtilities.postBookByISBN(selectedBook.getIsbn());
+                                    Snackbar.make(rootView, "Book added with success !", Snackbar.LENGTH_SHORT).show();
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
